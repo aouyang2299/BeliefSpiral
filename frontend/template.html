@@ -61,6 +61,21 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
   </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.belief-link').forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        var value = this.textContent;
+        var input = document.querySelector('input[name="query"]');
+        input.value = value;
+        input.focus();
+      });
+    });
+  });
+</script>
+
 </head>
 <body>
   <h1>Belief Graph Explorer</h1>
@@ -68,15 +83,19 @@
     <input name="query" placeholder="Enter a belief" value="{{ query }}" required>
     <button type="submit">Search</button>
   </form>
+
   {% if result %}
   <div class="results">
     <h2>Top Related Beliefs to "{{ query }}"</h2>
     <ul>
       {% for belief in result %}
-      <li>{{ belief }}</li>
+      <li><a href="#" class="belief-link">{{ belief }}</a></li>
       {% endfor %}
     </ul>
   </div>
+  {% else %}
+    <h2>No related beliefs</h2>
   {% endif %}
 </body>
+
 </html>
