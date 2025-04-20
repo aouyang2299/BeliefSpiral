@@ -78,55 +78,6 @@ def similar_to(query, topn=5):
     return [c for c, _ in sims]
 
 # Examples
-for q in ["trump", "vaccines", "moon", "right-wing"]:
-    print(f"\nQuery: {q!r}")
-    print(" Related:", similar_to(q))
-
-    
-# graph works as intended
-
-# # 1) Load and rebuild G exactly as before
-# with open("raw_data/final_data/newsapi_with_spacy_concepts.json", encoding="utf8") as f:
-#     records = json.load(f)
-
-# edge_counts = {}
-# for rec in records:
-#     cs = rec.get("concepts_spacy", [])
-#     for i in range(len(cs)):
-#         for j in range(i+1, len(cs)):
-#             pair = tuple(cs[k] for k in (i,j))
-#             edge_counts[pair] = edge_counts.get(pair, 0) + 1
-
-# G = nx.Graph()
-# for (a, b), w in edge_counts.items():
-#     G.add_edge(a, b, weight=w)
-
-# # 2) Print total nodes & edges
-# print("Nodes:", G.number_of_nodes(), "Edges:", G.number_of_edges())
-
-# # 3) List the first 20 nodes (alphabetically)
-# print("Sample nodes:", sorted(list(G.nodes()))[:20])
-
-# # 4) Search for any node containing “trump” (case‐insensitive)
-# print("Nodes matching 'trump':",
-#       [n for n in G.nodes() if "trump" in n.lower()])
-
-# # 5) Print top 10 highest‐degree nodes
-# deg = sorted(G.degree(), key=lambda x: x[1], reverse=True)
-# print("Top 10 by degree:", deg[:10])
-
-# # 6) (Re)run your embedding query with the exact node name:
-# from pprint import pprint
-# model = Node2Vec(G, dimensions=64, walk_length=30, num_walks=200, workers=4, weight_key="weight").fit(window=10, min_count=1)
-# for query in ["Trump", "Laura Loomer", "NSA"]:
-#     print(f"\nMost similar to {query!r}:")
-#     try:
-#         pprint([c for c, _ in model.wv.most_similar(query, topn=5)])
-#     except KeyError:
-#         print("x not found in graph nodes")
-
-
-# ── Example query ──────────────────────────────────────────────────────────────
-# if __name__ == "__main__":
-#     query = "trump"
-#     print(f"Top related beliefs to '{query}': {similar_to_fuzzy(query)}")
+# for q in ["trump", "vaccines", "moon", "right-wing"]:
+#     print(f"\nQuery: {q!r}")
+#     print(" Related:", similar_to(q))
