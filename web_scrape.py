@@ -31,6 +31,11 @@ from dotenv import load_dotenv
 from newsapi import NewsApiClient
 from newsapi import NewsApiClient
 
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+
 try:
     import praw
 except ImportError:
@@ -52,6 +57,15 @@ reddit = praw.Reddit(
     client_secret=REDDIT_CLIENT_SECRET,
     user_agent=REDDIT_USER_AGENT
 )
+def dedupe_dicts(items):
+    seen = set()
+    unique = []
+    for item in items:
+        key = json.dumps(item, sort_keys=True)   # canonical string
+        if key not in seen:
+            seen.add(key)
+            unique.append(item)
+    return unique
 
 def scrape_reddit(subreddit_name: str, limit: int = 500):
     """
@@ -74,276 +88,6 @@ def scrape_reddit(subreddit_name: str, limit: int = 500):
         time.sleep(0.5)  # rate‑limit
 
     return posts
-
-def dedupe_dicts(items):
-    seen = set()
-    unique = []
-    for item in items:
-        key = json.dumps(item, sort_keys=True)   # canonical string
-        if key not in seen:
-            seen.add(key)
-            unique.append(item)
-    return unique
-
-# this one sorta worked, it got all the names and the hyperlinks in references
-
-def scrape_wikipedia(url: str = "https://en.wikipedia.org/wiki/List_of_conspiracy_theories"):
-    """  
-    Scrape Wikipedia’s ‘List of conspiracy theories’ page for theory names.
-    Returns a list of strings and prints debug info.
-    """
-    resp = requests.get(url)
-    resp.raise_for_status()
-
-    soup = BeautifulSoup(resp.text, "html.parser")
-    # catch every <li> under the main content container
-    items = soup.select(".mw-parser-output ul li")
-    print(f"[DEBUG] Found total <li> tags: {len(items)}")
-
-    snippets = []
-    for li in items:
-        text = li.get_text(" ", strip=True)
-        # keep anything that *looks* like a theory name
-        if len(text) >= 20 and not text.lower().startswith(("see also", "retrieved from")):
-            snippets.append(text)
-
-    print(f"[DEBUG] Returning {len(snippets)} theory names")
-    return snippets
-
-# def scrape_wikipedia(url: str = "https://en.wikipedia.org/wiki/List_of_conspiracy_theories"):
-#     """  
-#     Scrape Wikipedia’s ‘List of conspiracy theories’ page for theory names.
-#     Returns a list of strings and prints debug info.
-#     """
-#     resp = requests.get(url)
-#     resp.raise_for_status()
-
-#     soup = BeautifulSoup(resp.text, "html.parser")
-#     # catch every <li> under the main content container
-#     items = soup.select(".mw-parser-output ul li")
-#     print(f"[DEBUG] Found total <li> tags: {len(items)}")
-
-#     snippets = []
-#     for li in items:
-#         text = li.get_text(" ", strip=True)
-#         # keep anything that *looks* like a theory name
-#         if len(text) >= 20 and not text.lower().startswith(("see also", "retrieved from")):
-#             snippets.append(text)
-
-#     print(f"[DEBUG] Returning {len(snippets)} theory names")
-#     return snippets
-
-# def scrape_wikipedia(url: str = "https://en.wikipedia.org/wiki/List_of_conspiracy_theories"):
-#     """
-#     Scrape Wikipedia’s ‘List of conspiracy theories’ and return a list of
-#     { theory: <name>, summary: <short text> } dicts.
-#     """
-#     resp = requests.get(url)
-#     resp.raise_for_status()
-#     soup = BeautifulSoup(resp.text, "html.parser")
-
-#     items = soup.select(".mw-parser-output > ul > li")
-#     results = []
-
-#     for li in items:
-#         # 1) find the first internal link
-#         a = li.find("a", href=True)
-#         if not a or not a["href"].startswith("/wiki/"):
-#             continue
-
-#         # 2) get the theory name
-#         theory = a.get_text(strip=True)
-
-#         # 3) get the full text of the li, remove citation markers
-#         text = li.get_text(" ", strip=True)
-#         text = re.sub(r"\[\d+\]", "", text)           # remove [1], [2], etc.
-#         text = re.sub(r"\[note \d+\]", "", text)      # remove [note 1], etc.
-
-#         # 4) strip off the theory name from the front, plus any leading punctuation
-#         summary = re.sub(rf"^{re.escape(theory)}\s*[–:—]\s*", "", text).strip()
-#         if not summary:
-#             continue
-
-#         results.append({
-#             "theory": theory,
-#             "summary": summary
-#         })
-
-#     return results
-
-# def scrape_wikipedia(
-#     url: str = "https://en.wikipedia.org/wiki/List_of_conspiracy_theories"
-# ):
-#     """
-#     Returns a list of { theory: <name>, summary: <first paragraph> } for each
-#     conspiracy theory on the page.
-#     """
-#     resp = requests.get(url)
-#     resp.raise_for_status()
-#     soup = BeautifulSoup(resp.text, "html.parser")
-
-#     results = []
-#     # Select all level‑3 headings under the main content
-#     for h3 in soup.select("#mw-content-text .mw-parser-output h3"):
-#         # Find the headline span (the theory name)
-#         span = h3.find("span", class_="mw-headline")
-#         if not span:
-#             continue
-#         title = span.get_text(strip=True)
-#         # Skip non‑theory sections
-#         if title.lower() in {"see also", "references", "bibliography"}:
-#             continue
-
-#         # The summary is typically the next <p> sibling
-#         p = h3.find_next_sibling()
-#         while p and p.name != "p":
-#             p = p.find_next_sibling()
-#         if not p:
-#             continue
-
-#         summary = p.get_text(" ", strip=True)
-#         results.append({"theory": title, "summary": summary})
-
-#     return results
-
-# def scrape_wikipedia_theories(
-#     url: str = "https://en.wikipedia.org/wiki/List_of_conspiracy_theories"
-# ):
-#     """
-#     Fetches all leaf <li> items in the 'List of conspiracy theories' page
-#     up until the 'See also' heading, and returns a deduped list of theory names.
-#     """
-#     resp = requests.get(url)
-#     resp.raise_for_status()
-#     soup = BeautifulSoup(resp.text, "html.parser")
-#     content = soup.select_one(".mw-parser-output")
-
-#     theories = []
-#     for el in content.descendants:
-#         # stop when we reach the "See also" section
-#         if getattr(el, "name", None) == "h2":
-#             span = el.find("span", class_="mw-headline")
-#             if span and span.get("id") == "See_also":
-#                 break
-
-#         # only look at <li> tags
-#         if getattr(el, "name", None) != "li":
-#             continue
-
-#         # skip any <li> that contains a nested <ul> (i.e. region or grouping headers)
-#         if el.find("ul"):
-#             continue
-
-#         # find the first valid wiki link
-#         a = el.find("a", href=True)
-#         if not a:
-#             continue
-#         href = a["href"]
-#         # must be a standard wiki article (no colons)
-#         if not href.startswith("/wiki/") or ":" in href:
-#             continue
-
-#         name = a.get_text(strip=True)
-#         theories.append(name)
-
-#     # dedupe while preserving order
-#     return list(dict.fromkeys(theories))
-
-# def scrape_wikipedia_theories(
-#     url: str = "https://en.wikipedia.org/wiki/List_of_conspiracy_theories"
-# ):
-#     """
-#     Crawl the page’s <h3> headings (one per theory) and grab the first
-#     descriptive paragraph that follows each heading. Stops at the “See also” section.
-#     Returns: List[{"theory": str, "summary": str}]
-#     """
-#     resp = requests.get(url)
-#     resp.raise_for_status()
-#     soup = BeautifulSoup(resp.text, "html.parser")
-
-#     content = soup.select_one(".mw-parser-output")
-#     results = []
-
-#     for elem in content.children:
-#         # 1) Stop once we hit “See also”
-#         if getattr(elem, "name", None) == "h2":
-#             span = elem.find("span", class_="mw-headline")
-#             if span and span.get_text(strip=True).lower() == "see also":
-#                 break
-
-#         # 2) On each <h3>, grab the theory name and its next real paragraph
-#         if getattr(elem, "name", None) == "h3":
-#             title = elem.get_text(strip=True)
-
-#             # find the next <p>
-#             p = elem.find_next_sibling()
-#             while p and p.name != "p":
-#                 p = p.find_next_sibling()
-
-#             # if that paragraph just says “Main article…”, skip to the following <p>
-#             if p and p.get_text().startswith("Main article"):
-#                 p = p.find_next_sibling()
-#                 while p and p.name != "p":
-#                     p = p.find_next_sibling()
-
-#             summary = p.get_text(" ", strip=True) if p else ""
-#             results.append({"theory": title, "summary": summary})
-
-#     return results
-
-# def scrape_wikipedia_theories(
-#     url: str = "https://en.wikipedia.org/wiki/List_of_conspiracy_theories"
-# ):
-#     """
-#     Returns a list of { theory: <heading>, summary: <first real paragraph> }
-#     for each <h3> section on the page, skipping non‑theory sections.
-#     """
-#     resp = requests.get(url)
-#     resp.raise_for_status()
-
-#     soup = BeautifulSoup(resp.text, "html.parser")
-#     content = soup.find("div", class_="mw-parser-output")
-
-#     results = []
-#     for h3 in content.find_all("h3"):
-#         # Extract the heading text inside <span class="mw-headline">
-#         span = h3.find("span", class_="mw-headline")
-#         if not span:
-#             continue
-#         title = span.get_text(strip=True)
-
-#         # Stop if we’ve hit the “See also” (or other end) section
-#         if title.lower() in {
-#             "see also", "references", "notes", "further reading", "external links"
-#         }:
-#             break
-
-#         # Find the very next <p> sibling
-#         p = h3.find_next_sibling()
-#         while p and p.name != "p":
-#             p = p.find_next_sibling()
-
-#         # Skip the “Main article:” paragraph if it appears first
-#         if p and p.get_text().startswith("Main article"):
-#             p = p.find_next_sibling()
-#             while p and p.name != "p":
-#                 p = p.find_next_sibling()
-
-#         if not p:
-#             continue
-
-#         summary = p.get_text(" ", strip=True)
-#         results.append({"theory": title, "summary": summary})
-
-#     # Dedupe by title (preserve first occurrence)
-#     seen = set()
-#     unique = []
-#     for item in results:
-#         if item["theory"] not in seen:
-#             seen.add(item["theory"])
-#             unique.append(item)
-
-#     return unique
 
 def scrape_wikipedia_api(
     page: str = "List_of_conspiracy_theories"
@@ -440,37 +184,282 @@ from requests_html import HTMLSession
 # # gab_snips = scrape_gab_render(limit=200)
 # # print(f"Fetched {len(gab_snips)} Gab posts.")
 
-def scrape_gab_api(keyword: str = "conspiracy", page_limit: int = 5, per_page: int = 50):
-    """
-    Fetch public Gab posts containing `keyword` via Gab's JSON search endpoint.
-    Returns a flat list of post texts.
-    """
-    snippets = []
-    base_url = "https://gab.com/api/v3/search"
-    for page in range(1, page_limit + 1):
-        params = {
-            "type": "status",
-            "onlyVerified": "false",
-            "q": keyword,
-            "resolve": "true",
-            "page": page
-        }
-        resp = requests.get(base_url, params=params)
-        resp.raise_for_status()
-        data = resp.json()
+# def scrape_gab_api(keyword: str = "conspiracy", page_limit: int = 5, per_page: int = 50):
+#     """
+#     Fetch public Gab posts containing `keyword` via Gab's JSON search endpoint.
+#     Returns a flat list of post texts.
+#     """
+#     snippets = []
+#     base_url = "https://gab.com/api/v3/search"
+#     for page in range(1, page_limit + 1):
+#         params = {
+#             "type": "status",
+#             "onlyVerified": "false",
+#             "q": keyword,
+#             "resolve": "true",
+#             "page": page
+#         }
+#         resp = requests.get(base_url, params=params)
+#         resp.raise_for_status()
+#         data = resp.json()
 
-        statuses = data.get("statuses", [])
-        if not statuses:
+#         statuses = data.get("statuses", [])
+#         if not statuses:
+#             break
+
+#         # Extract the rendered HTML content, stripping tags if you like
+#         for status in statuses:
+#             html = status.get("content", "")
+#             # Optionally strip HTML tags:
+#             text = BeautifulSoup(html, "html.parser").get_text(" ", strip=True)
+#             snippets.append(text)
+
+#     return snippets
+
+
+import json
+from garc.client import Garc
+
+# from garc.garc import Gab
+
+GAB_USER = os.getenv("GAB_USERNAME")
+GAB_PASS = os.getenv("GAB_PASSWORD")
+
+# def scrape_gab_conspiracies(username: str,
+#                             password: str,
+#                             keyword: str = "conspiracy",
+#                             number_gabs: int = 200):
+#     """
+#     Authenticates to Gab, searches for 'keyword', and returns up to
+#     `number_gabs` posts containing that term.
+#     """
+ 
+#     gab = Garc(user_account=os.getenv("GAB_ACCOUNT"), 
+#                        user_password=os.getenv("GAB_PASSWORD"))
+
+#     print("Scraping Gab…")
+#     posts = list(gab.search("conspiracy", gabs=200))
+#     snippets = [p["body"] for p in posts]  # or p["content"]
+#     return snippets
+
+
+# def scrape_gab_conspiracies(
+#     keyword: str = "conspiracy",
+#     number_gabs: int = 200
+# ):
+#     """
+#     Logs in (automatically via env vars), searches for `keyword`, and
+#     returns up to `number_gabs` post bodies as plain text.
+#     """
+#     # load GAB_ACCOUNT & GAB_PASSWORD from .env
+#     load_dotenv()
+#     # Garc will pick up GAB_ACCOUNT / GAB_PASSWORD from the environment
+#     gab = Garc()
+
+#     snippets = []
+#     print(f"Scraping Gab for '{keyword}'…")
+#     for post in gab.search(keyword, gabs=number_gabs):
+#         # each `post` is a dict; the cleaned text lives in `body`
+#         snippets.append(post.get("body", ""))
+
+#     return snippets
+
+# def scrape_gab_conspiracies(
+#     username: str,
+#     password: str,
+#     keyword: str = "conspiracy",
+#     number_gabs: int = 200
+# ):
+#     """
+#     Authenticates to Gab with the given credentials, searches for `keyword`,
+#     and returns up to `number_gabs` posts' bodies.
+#     """
+#     # Pass the creds you received as args here:
+#     gab = Garc(user_account=username, user_password=password)
+
+#     snippets = []
+#     print(f"Scraping Gab for '{keyword}'…")
+#     for post in gab.search(keyword, gabs=number_gabs):
+#         snippets.append(post.get("body", ""))
+
+#     return snippets
+
+# def scrape_gab_selenium(limit=100, headless=True):
+#     """
+#     Uses Selenium to scrape the public Explore page on Gab without logging in.
+#     Returns up to `limit` post texts.
+#     """
+#     # 1) Configure headless Chrome
+#     chrome_opts = Options()
+#     if headless:
+#         chrome_opts.add_argument("--headless")
+#     chrome_opts.add_argument("--disable-gpu")
+#     chrome_opts.add_argument("--window-size=1920,1080")
+
+#     # 2) Launch the browser
+#     driver = webdriver.Chrome(options=chrome_opts)
+#     driver.get("https://gab.com/explore")
+
+#     # 3) Scroll to load more posts until we have enough
+#     SCROLL_PAUSE = 1.5
+#     posts = []
+#     while len(posts) < limit:
+#         # grab whatever posts are currently loaded
+#         elems = driver.find_elements(By.CSS_SELECTOR, "div[data-testid='post']")
+#         posts = elems  # override to the latest list
+#         if len(posts) >= limit:
+#             break
+
+#         # scroll down and wait
+#         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+#         time.sleep(SCROLL_PAUSE)
+
+#     # 4) Extract text from the first `limit` posts
+#     snippets = []
+#     for post in posts[:limit]:
+#         try:
+#             content = post.find_element(By.CSS_SELECTOR, "div[data-testid='post-content']")
+#             snippets.append(content.text)
+#         except Exception:
+#             continue
+
+#     driver.quit()
+#     return snippets
+
+# def scrape_gab(keyword="conspiracy", limit=100, headless=True):
+    
+#     """
+#     Drives a headless Chrome to grab up to `limit` Gab posts matching `keyword`.
+#     """
+#     # 1) Configure Chrome
+#     opts = Options()
+#     if headless:
+#         opts.add_argument("--headless")
+#     opts.add_argument("--disable-gpu")
+#     opts.add_argument("--window-size=1920,1080")
+
+#     driver = webdriver.Chrome(options=opts)
+#     # 2) Go directly to the search results page
+#     driver.get(f"https://gab.com/top?q={keyword}")
+#     time.sleep(3)  # let initial posts load
+
+#     # 3) Scroll until we have `limit` posts
+#     SCROLL_PAUSE = 1.5
+#     posts = []
+#     search = 0
+#     while len(posts) < limit:
+#         elems = driver.find_elements(By.CSS_SELECTOR, "div[data-testid='post']")
+#         posts = elems
+#         if len(posts) >= limit:
+#             break
+#         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+#         time.sleep(SCROLL_PAUSE)
+#         search += 1
+#         print(len(posts), search)
+
+#     # 4) Extract text
+#     snippets = []
+#     for post in posts[:limit]:
+#         try:
+#             content = post.find_element(By.CSS_SELECTOR, "div[data-testid='post-content']")
+#             snippets.append(content.text)
+#         except:
+#             continue
+
+#     driver.quit()
+#     return snippets
+
+    # chrome_opts = Options()
+    # if headless:
+    #     chrome_opts.add_argument("--headless")
+    # chrome_opts.add_argument("--disable-gpu")
+    # chrome_opts.add_argument("--window-size=1920,1080")
+
+    # driver = webdriver.Chrome(options=chrome_opts)
+    # # 1) Load the Gab homepage so the search box is available
+    # driver.get("https://gab.com/")
+    # time.sleep(2)
+
+    # # 2) Find the search input, type your keyword, and submit
+    # search_box = driver.find_element(By.CSS_SELECTOR, "input[placeholder='Search']")
+    # search_box.send_keys(keyword)
+    # search_box.send_keys(Keys.RETURN)
+    # time.sleep(3)  # wait for search results to load
+
+    # # 3) Scroll until you’ve loaded at least `limit` posts
+    # SCROLL_PAUSE = 1.5
+    # posts = []
+    # while len(posts) < limit:
+    #     elems = driver.find_elements(By.CSS_SELECTOR, "div[data-testid='post']")
+    #     posts = elems
+    #     if len(posts) >= limit:
+    #         break
+    #     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    #     time.sleep(SCROLL_PAUSE)
+    #     print(len(posts))
+
+    # # 4) Extract text from the first `limit` results
+    # snippets = []
+    # for post in posts[:limit]:
+    #     try:
+    #         content = post.find_element(By.CSS_SELECTOR, "div[data-testid='post-content']")
+    #         snippets.append(content.text)
+    #     except:
+    #         continue
+
+    # driver.quit()
+    # return snippets
+
+
+def login_gab(driver, user, pw):
+    driver.get("https://gab.com/login")
+    time.sleep(2)
+    # these name attrs may change—adjust if needed
+    driver.find_element(By.NAME, "user[username]").send_keys(user)
+    driver.find_element(By.NAME, "user[password]").send_keys(pw + Keys.RETURN)
+    time.sleep(5)  # wait for login to complete
+
+def scrape_gab_hashtag(keyword="conspiracy", limit=50, headless=True):
+    opts = Options()
+    if headless:
+        opts.add_argument("--headless")
+    opts.add_argument("--disable-gpu")
+    opts.add_argument("--window-size=1920,1080")
+
+    driver = webdriver.Chrome(options=opts)
+    # 1) Log in
+    login_gab(driver, os.getenv("GAB_USER"), os.getenv("GAB_PASS"))
+
+    print("logged in")
+    # 2) Visit the hashtag page (must be logged in)
+    driver.get(f"https://gab.com/top?q={keyword}")
+    time.sleep(3)
+
+    # 3) Infinite‑scroll until we load enough <div data-testid="post">
+    SCROLL_PAUSE = 1.5
+    search = 0
+    while True:
+        posts = driver.find_elements(By.CSS_SELECTOR, "div[data-testid='post']")
+        if len(posts) >= limit:
             break
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(SCROLL_PAUSE)
+        search += 1
+        print(search, len(posts))
 
-        # Extract the rendered HTML content, stripping tags if you like
-        for status in statuses:
-            html = status.get("content", "")
-            # Optionally strip HTML tags:
-            text = BeautifulSoup(html, "html.parser").get_text(" ", strip=True)
-            snippets.append(text)
+    # 4) Extract the text content
+    snippets = []
+    for post in posts[:limit]:
+        try:
+            snippets.append(
+                post.find_element(By.CSS_SELECTOR,
+                    "div[data-testid='post-content']").text
+            )
+        except:
+            continue
 
-    return snippets
+    driver.quit()
+    return list(dict.fromkeys(snippets))  # dedupe
 
 # DOES NOT WORK, ONION HAS NO TAGS ANYMORE
 # def scrape_satire(source_url: str = "https://www.theonion.com/tag/conspiracy", limit: int = 100):
@@ -486,7 +475,80 @@ def scrape_gab_api(keyword: str = "conspiracy", page_limit: int = 5, per_page: i
 #             snippets.append(text)
 #     return snippets
 
-def fetch_newsapi_articles(keywords, page_size=100, max_pages=3):
+# def fetch_conspiracy_articles(
+#     keyword: str = "conspiracy",
+#     page_size: int = 100,
+#     max_pages: int = 3,
+#     from_date: str = "2025-01-01",
+#     to_date: str = "2025-04-19"
+# ):
+#     """
+#     Fetch NewsAPI articles matching a single keyword ("conspiracy"),
+#     paginating up to `max_pages` pages of size `page_size`.
+#     """
+#     all_articles = []
+#     for page in range(1, max_pages + 1):
+#         resp = newsapi.get_everything(
+#             q=f'"{keyword}"',
+#             language="en",
+#             from_param=from_date,
+#             to=to_date,
+#             page=page,
+#             page_size=page_size,
+#             sort_by="relevancy"
+#         )
+#         articles = resp.get("articles", [])
+#         if not articles:
+#             break  # no more results
+#         all_articles.extend(articles)
+
+#     # Dedupe by URL
+#     seen, unique = set(), []
+#     for art in all_articles:
+#         url = art.get("url")
+#         if url and url not in seen:
+#             seen.add(url)
+#             unique.append(art)
+
+#     return unique
+
+
+def fetch_newsapi(
+    page_size: int = 100,
+    max_pages: int = 3
+) -> list[dict]:
+    """
+    Fetch NewsAPI articles matching "conspiracy", paginating through
+    up to `max_pages` pages of size `page_size`, and return a list of
+    {"title": ..., "summary": ...} dictionaries.
+    """
+    seen = set()
+    results = []
+
+    for page in range(1, max_pages + 1):
+        response = newsapi.get_everything(
+            q='"conspiracy"',
+            language="en",
+            page=page,
+            page_size=page_size,
+            sort_by="relevancy"
+        )
+        articles = response.get("articles", [])
+        if not articles:
+            break
+
+        for art in articles:
+            url = art.get("url")
+            if url and url not in seen:
+                seen.add(url)
+                results.append({
+                    "title":  art.get("title", "").strip(),
+                    "summary": (art.get("description") or "").strip()
+                })
+
+    return results
+
+def old(keywords, page_size=100, max_pages=3): # based on wiki keywords
     """
     Fetch NewsAPI articles by batching per keyword and paginating results.
     """
@@ -536,37 +598,45 @@ def test_newsapi_connection():
 
 def main():
     
-    # print("Scraping Reddit...")
-    # reddit_snips = scrape_reddit("conspiracy", limit=5)
-
-    # unique_posts = dedupe_dicts(reddit_snips)
-
-    # with open("reddit.json", "w", encoding="utf-8") as f:
-    #     json.dump(unique_posts, f, ensure_ascii=False, indent=2)
-
-    # print("!! Saved to reddit.json")
+    print("Scraping Reddit...")
+    reddit_snips = scrape_reddit("conspiracy", limit=200)
+    unique_posts = dedupe_dicts(reddit_snips)
+    with open("reddit.json", "w", encoding="utf-8") as f:
+        json.dump(unique_posts, f, ensure_ascii=False, indent=2)
+    print("!! Saved to reddit.json")
 
     # print("Scraping Wikipedia...")
-    wiki_data = scrape_wikipedia_api()
-    print(f"Found {len(wiki_data)} theories.")  # should be >0
-    with open("wiki.json", "w", encoding="utf-8") as f:
-        json.dump(wiki_data, f, ensure_ascii=False, indent=2)
-    print("Saved to wiki.json")
-    
-    # print("Scraping Gab...")
-    # # gab_snips = scrape_gab(limit=5)
-    # gab_snips = scrape_gab_api(keyword="conspiracy", page_limit=5)
-    # with open("gab.json", "w", encoding="utf-8") as f:
-    #     json.dump(list(set(gab_snips)), f, ensure_ascii=False, indent=2)
-    # print("!! Saved to gab.json")
+    # wiki_data = scrape_wikipedia_api()
+    # print(f"Found {len(wiki_data)} theories.")  # should be >0
+    # with open("raw_data/wiki.json", "w", encoding="utf-8") as f:
+    #     json.dump(wiki_data, f, ensure_ascii=False, indent=2)
+    # print("Saved to wiki.json")
 
-    # # 2) Fetch articles via NewsAPI
+
+    # gabs = scrape_gab_hashtag("conspiracy", limit=50, headless=True)
+    # print(f"Fetched {len(gabs)} posts.")
+    # os.makedirs("data", exist_ok=True)
+    # with open("raw_data/gab.json", "w", encoding="utf-8") as f:
+    #     json.dump(gabs, f, ensure_ascii=False, indent=2)
+    # print("Saved to raw_data/gab.json")
+
+    # 2) Fetch articles via NewsAPI
     # print("Querying NewsAPI for matching articles…")
-    # articles = fetch_newsapi_articles(wiki_snips, page_size=5)
-    # print(f"Retrieved {len(articles)} articles.")
+    # articles_list = fetch_newsapi(page_size=200, max_pages=3)
+    # `articles_list` is now a list of dicts, e.g.:
+    # [
+    #   {"title": "Conspiracy Theory A", "summary": "Brief description…"},
+    #   {"title": "Conspiracy Theory B", "summary": "Another summary…"},
+    #   …
+    # ]
+
+    # Example: print the first 3 entries
+    # for idx, art in enumerate(articles_list[:3], start=1):
+    #     print(f"{idx}. {art['title']}\n   {art['summary']}\n")
+    # print(f"Found {len(articles_list)} unique articles about conspiracy.")
 
     # with open("newsapi.json", "w", encoding="utf-8") as f:
-    #     json.dump(list(set(articles)), f, ensure_ascii=False, indent=2)
+    #     json.dump(articles_list, f, ensure_ascii=False, indent=2)
     # print("!! Saved to newsapi.json")
 
     # combined = set(reddit_snips + wiki_snips + gab_snips + articles)
