@@ -3,18 +3,20 @@ import os
 import sys
 
 # Ensure we can import belief_graph and resolve data paths
-current_dir = os.path.dirname(os.path.abspath(__file__))
-project_root = os.path.abspath(os.path.join(current_dir, '..'))
-sys.path.insert(0, project_root)
-# Change working dir so belief_graph's relative paths resolve
-os.chdir(project_root)
+# current_dir = os.path.dirname(os.path.abspath(__file__))
+# project_root = os.path.abspath(os.path.join(current_dir, '..'))
+# sys.path.insert(0, project_root)
+# # Change working dir so belief_graph's relative paths resolve
+# os.chdir(project_root)
 
 from belief_graph import similar_to
 
-app = Flask(__name__, template_folder=current_dir)
+app = Flask(
+    __name__,
+   # <― point at your static files
+    static_url_path='/static'                               # <― mount them at /static
+)
 
-# Inline HTML template
-TEMPLATE = 'template.html'
 
 @app.route('/', methods=['GET', 'POST'])
 def index():

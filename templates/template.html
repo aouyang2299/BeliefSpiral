@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
+
+  <title>Belief Graph Explorer</title>
+  
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.belief-link').forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        var value = this.textContent;
+        var input = document.querySelector('input[name="query"]');
+        input.value = value;
+        input.focus();
+      });
+    });
+  });
+</script>
+
+</head>
+<body>
+  <h1>Belief Graph Explorer</h1>
+  <form method="post">
+    <input name="query" placeholder="Enter a belief" value="{{ query }}" required>
+    <button type="submit">Search</button>
+  </form>
+
+  {% if result %}
+  <div id="graph-container">
+    <!-- This is the center node -->
+    <div class="node" id="node-search">
+      {{ query }}
+    </div>
+
+    <!-- These are the outer nodes -->
+    <div id="result-nodes">
+      {% for belief in result %}
+      <div class="node" id="node-{{ forloop.counter }}">
+        {{ belief }}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% else %}
+    <h2>No related beliefs</h2>
+  {% endif %}
+</body>
+
+</html>
