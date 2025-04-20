@@ -29,7 +29,6 @@ import re
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from newsapi import NewsApiClient
-from newsapi import NewsApiClient
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -67,27 +66,57 @@ def dedupe_dicts(items):
             unique.append(item)
     return unique
 
+# def scrape_reddit(subreddit_name: str, limit: int = 500):
+#     """
+#     Scrape titles, bodies, and comments from a subreddit,
+#     returning a list of dicts with keys: title, body, comments.
+#     """
+#     posts = []
+#     subreddit = reddit.subreddit(subreddit_name)
+#     for submission in subreddit.hot(limit=limit):
+#         # Pull all the comments (flattened)
+#         submission.comments.replace_more(limit=0)
+#         comments = [comment.body for comment in submission.comments.list()]
+
+#         posts.append({
+#             "title": submission.title,
+#             "body": submission.selftext or "",
+#             "comments": comments
+#         })
+
+#         time.sleep(0.5)  # rate‑limit
+
+#     return posts
+
+
 def scrape_reddit(subreddit_name: str, limit: int = 500):
     """
     Scrape titles, bodies, and comments from a subreddit,
-    returning a list of dicts with keys: title, body, comments.
+    returning a list of dicts with keys:
+      - title: "<title> <body>" (body omitted if empty)
+      - summary: [list of comment strings]
     """
     posts = []
     subreddit = reddit.subreddit(subreddit_name)
     for submission in subreddit.hot(limit=limit):
-        # Pull all the comments (flattened)
+        # Flatten all comments
         submission.comments.replace_more(limit=0)
-        comments = [comment.body for comment in submission.comments.list()]
+        comments = [c.body for c in submission.comments.list()]
+
+        # Build the combined title
+        title = submission.title or ""
+        body  = submission.selftext or ""
+        full_title = f"{title} {body}".strip() if body else title
 
         posts.append({
-            "title": submission.title,
-            "body": submission.selftext or "",
-            "comments": comments
+            "title":   full_title,
+            "summary": comments
         })
 
-        time.sleep(0.5)  # rate‑limit
+        time.sleep(0.5)  # be kind to Reddit
 
     return posts
+
 
 def scrape_wikipedia_api(
     page: str = "List_of_conspiracy_theories"
@@ -215,7 +244,6 @@ from requests_html import HTMLSession
 #             snippets.append(text)
 
 #     return snippets
-
 
 import json
 from garc.client import Garc
@@ -475,42 +503,6 @@ def scrape_gab_hashtag(keyword="conspiracy", limit=50, headless=True):
 #             snippets.append(text)
 #     return snippets
 
-# def fetch_conspiracy_articles(
-#     keyword: str = "conspiracy",
-#     page_size: int = 100,
-#     max_pages: int = 3,
-#     from_date: str = "2025-01-01",
-#     to_date: str = "2025-04-19"
-# ):
-#     """
-#     Fetch NewsAPI articles matching a single keyword ("conspiracy"),
-#     paginating up to `max_pages` pages of size `page_size`.
-#     """
-#     all_articles = []
-#     for page in range(1, max_pages + 1):
-#         resp = newsapi.get_everything(
-#             q=f'"{keyword}"',
-#             language="en",
-#             from_param=from_date,
-#             to=to_date,
-#             page=page,
-#             page_size=page_size,
-#             sort_by="relevancy"
-#         )
-#         articles = resp.get("articles", [])
-#         if not articles:
-#             break  # no more results
-#         all_articles.extend(articles)
-
-#     # Dedupe by URL
-#     seen, unique = set(), []
-#     for art in all_articles:
-#         url = art.get("url")
-#         if url and url not in seen:
-#             seen.add(url)
-#             unique.append(art)
-
-#     return unique
 
 
 def fetch_newsapi(
@@ -599,9 +591,9 @@ def test_newsapi_connection():
 def main():
     
     print("Scraping Reddit...")
-    reddit_snips = scrape_reddit("conspiracy", limit=200)
+    reddit_snips = scrape_reddit("conspiracy", limit=2)
     unique_posts = dedupe_dicts(reddit_snips)
-    with open("reddit.json", "w", encoding="utf-8") as f:
+    with open("reddit_new_format.json", "w", encoding="utf-8") as f:
         json.dump(unique_posts, f, ensure_ascii=False, indent=2)
     print("!! Saved to reddit.json")
 
