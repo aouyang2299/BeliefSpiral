@@ -1,4 +1,9 @@
-<h1>Belief Graph Explorer</h1>
+<h1>
+  <a href="{{ url_for('index') }}" style="text-decoration: none; color: inherit;">
+    Belief Graph Explorer
+  </a>
+</h1>
+
 <form method="post">
   <input name="query" placeholder="Enter a belief"
          value="{{ query }}" required>
