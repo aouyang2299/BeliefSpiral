@@ -540,38 +540,38 @@ def fetch_newsapi(
 
     return results
 
-def old(keywords, page_size=100, max_pages=3): # based on wiki keywords
-    """
-    Fetch NewsAPI articles by batching per keyword and paginating results.
-    """
-    all_articles = []
-    for kw in keywords:
-        if not kw:  # skip empty keywords
-            continue
-        for page in range(1, max_pages + 1):
-            # Exact‑phrase match, date‑bound, and paged request
-            response = newsapi.get_everything(
-                q=f'"{kw}"',
-                language='en',
-                from_param="2025-01-01",
-                to="2025-04-19",
-                page=page,
-                page_size=page_size
-            )
-            articles = response.get('articles', [])
-            if not articles:
-                break  # no further pages for this keyword
-            all_articles.extend(articles)
+# def old(keywords, page_size=100, max_pages=3): # based on wiki keywords
+#     """
+#     Fetch NewsAPI articles by batching per keyword and paginating results.
+#     """
+#     all_articles = []
+#     for kw in keywords:
+#         if not kw:  # skip empty keywords
+#             continue
+#         for page in range(1, max_pages + 1):
+#             # Exact‑phrase match, date‑bound, and paged request
+#             response = newsapi.get_everything(
+#                 q=f'"{kw}"',
+#                 language='en',
+#                 from_param="2025-01-01",
+#                 to="2025-04-19",
+#                 page=page,
+#                 page_size=page_size
+#             )
+#             articles = response.get('articles', [])
+#             if not articles:
+#                 break  # no further pages for this keyword
+#             all_articles.extend(articles)
 
-    # Deduplicate by URL
-    seen, unique = set(), []
-    for article in all_articles:
-        url = article.get('url')
-        if url and url not in seen:
-            seen.add(url)
-            unique.append(article)
+#     # Deduplicate by URL
+#     seen, unique = set(), []
+#     for article in all_articles:
+#         url = article.get('url')
+#         if url and url not in seen:
+#             seen.add(url)
+#             unique.append(article)
 
-    return unique
+#     return unique
 
 def test_newsapi_connection():
     # try a very common conspiracy term
@@ -590,12 +590,12 @@ def test_newsapi_connection():
 
 def main():
     
-    print("Scraping Reddit...")
-    reddit_snips = scrape_reddit("conspiracy", limit=2)
-    unique_posts = dedupe_dicts(reddit_snips)
-    with open("reddit_new_format.json", "w", encoding="utf-8") as f:
-        json.dump(unique_posts, f, ensure_ascii=False, indent=2)
-    print("!! Saved to reddit.json")
+    # print("Scraping Reddit...")
+    # reddit_snips = scrape_reddit("conspiracy", limit=2)
+    # unique_posts = dedupe_dicts(reddit_snips)
+    # with open("reddit_new_format.json", "w", encoding="utf-8") as f:
+    #     json.dump(unique_posts, f, ensure_ascii=False, indent=2)
+    # print("!! Saved to reddit.json")
 
     # print("Scraping Wikipedia...")
     # wiki_data = scrape_wikipedia_api()
@@ -613,8 +613,8 @@ def main():
     # print("Saved to raw_data/gab.json")
 
     # 2) Fetch articles via NewsAPI
-    # print("Querying NewsAPI for matching articles…")
-    # articles_list = fetch_newsapi(page_size=200, max_pages=3)
+    print("Querying NewsAPI for matching articles…")
+    articles_list = fetch_newsapi(page_size=1, max_pages=100)
     # `articles_list` is now a list of dicts, e.g.:
     # [
     #   {"title": "Conspiracy Theory A", "summary": "Brief description…"},
@@ -623,13 +623,13 @@ def main():
     # ]
 
     # Example: print the first 3 entries
-    # for idx, art in enumerate(articles_list[:3], start=1):
-    #     print(f"{idx}. {art['title']}\n   {art['summary']}\n")
-    # print(f"Found {len(articles_list)} unique articles about conspiracy.")
+    for idx, art in enumerate(articles_list[:3], start=1):
+        print(f"{idx}. {art['title']}\n   {art['summary']}\n")
+    print(f"Found {len(articles_list)} unique articles about conspiracy.")
 
-    # with open("newsapi.json", "w", encoding="utf-8") as f:
-    #     json.dump(articles_list, f, ensure_ascii=False, indent=2)
-    # print("!! Saved to newsapi.json")
+    with open("newsapi_ver2.json", "w", encoding="utf-8") as f:
+        json.dump(articles_list, f, ensure_ascii=False, indent=2)
+    print("!! Saved to newsapi.json")
 
     # combined = set(reddit_snips + wiki_snips + gab_snips + articles)
     # print(f"Total unique snippets: {len(combined)}")

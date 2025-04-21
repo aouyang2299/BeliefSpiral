@@ -1,0 +1,302 @@
+[
+  {
+    "title": "Black helicopters",
+    "summary": "This conspiracy theory emerged in the US in the 1960s. The John Birch Society originally promoted [ 1 ] it, asserting that a United Nations force would soon arrive in black helicopters to bring the US under UN control. A similar theory concerning so-called \"phantom helicopters\" appeared in the UK in the 1970s. [ 2 ] The theory re-emerged in the 1990s during the presidency of Bill Clinton , and was \"energetically\" promoted by writer Jim Keith in his book Black Helicopters Over America . By the 2000s, the term \"black helicopters\" became a shorthand for anti-government conspiracy theories that \"stretch the bounds of credulity\", [ 3 ] such as those espoused by militia groups and a number of guests of talk show host Glenn Beck . [ 4 ] [ 5 ]",
+    "concepts_spacy": [
+      "Black Helicopters Over America",
+      "talk show host Glenn Beck",
+      "The John Birch Society",
+      "a United Nations force",
+      "writer Jim Keith",
+      "Bill Clinton"
+    ]
+  },
+  {
+    "title": "Chemtrails",
+    "summary": "Also known as SLAP (Secret Large-scale Atmospheric Program), this theory alleges that water condensation trails (\" contrails \") from aircraft consist of chemical or biological agents , or contain a supposedly toxic mix of aluminum , strontium and barium , [ 1 ] under secret government policies. An estimated 17% of people globally believe the theory to be true or partly true. In 2016, the Carnegie Institution for Science published the first-ever peer-reviewed study of the chemtrail theory; 76 out of 77 participating atmospheric chemists and geochemists stated that they had seen no evidence to support the chemtrail theory or stated that chemtrail theorists rely on poor sampling . [ 2 ] [ 3 ]",
+    "concepts_spacy": [
+      "Secret Large-scale Atmospheric Program",
+      "the Carnegie Institution for Science",
+      "strontium",
+      "barium",
+      "the first-ever peer-reviewed study",
+      "chemical or biological agents"
+    ]
+  },
+  {
+    "title": "Korean Air Lines Flight 007",
+    "summary": "The destruction of Korean Air Lines Flight 007 by Soviet jets in 1983 has long drawn the interest of conspiracy theorists . The theories range from allegations of a planned espionage mission, to a US government cover-up, to the consumption of the passengers' remains by giant crabs. [ 1 ]",
+    "concepts_spacy": [
+      "a US government cover-up",
+      "Korean Air Lines Flight",
+      "a planned espionage mission",
+      "the passengers' remains",
+      "conspiracy theorists",
+      "The destruction"
+    ]
+  },
+  {
+    "title": "Malaysia Airlines Flight MH370",
+    "summary": "The disappearance of Malaysia Airlines Flight 370 in southeast Asia in March 2014 has prompted many theories. One theory suggests that this plane was hidden away and reintroduced as Flight MH17 later the same year in order to be shot down over Ukraine for political purposes. American conspiracy theorist James H. Fetzer has placed responsibility for the disappearance with the then Israeli Prime Minister Benjamin Netanyahu . [ 1 ] Historian Norman Davies has promoted the conspiracy theory that hackers remotely took over a Boeing Uninterruptible Autopilot , supposedly installed on board, remotely piloting the aircraft to Antarctica. [ 2 ] [ 3 ]",
+    "concepts_spacy": [
+      "American conspiracy theorist James H. Fetzer",
+      "a Boeing Uninterruptible Autopilot",
+      "the then Israeli Prime Minister",
+      "Malaysia Airlines Flight",
+      "Historian Norman Davies",
+      "Benjamin Netanyahu"
+    ]
+  },
+  {
+    "title": "Malaysia Airlines Flight MH17",
+    "summary": "Malaysia Airlines Flight 17 was shot down over Ukraine in July 2014. This event has spawned numerous alternative theories. These variously include allegations that it was secretly Flight MH370 , that the plane was actually shot down by the Ukrainian Air Force to frame Russia, that it was part of a conspiracy to conceal the \"truth\" about HIV (seven disease specialists were on board), or that the Illuminati or Israel was responsible. [ 1 ] [ 2 ]",
+    "concepts_spacy": [
+      "the Ukrainian Air Force",
+      "Malaysia Airlines",
+      "Ukraine",
+      "Russia",
+      "Israel",
+      "board"
+    ]
+  },
+  {
+    "title": "<i>Deepwater Horizon</i>",
+    "summary": "Multiple conspiracy theories pertain to a fatal oil-rig industrial accident in 2010 in the Gulf of Mexico , alleging sabotage by those seeking to promote environmentalism, or a strike by North Korean or Russian submarines. Elements of such theories had been suggested or promoted by US radio host Rush Limbaugh . [ 1 ] [ 2 ]",
+    "concepts_spacy": [
+      "Deepwater Horizon</i> Multiple conspiracy theories",
+      "US radio host Rush Limbaugh",
+      "the Gulf of Mexico",
+      "a fatal oil-rig industrial accident",
+      "North Korean or Russian submarines",
+      "environmentalism"
+    ]
+  },
+  {
+    "title": "New Coke",
+    "summary": "A theory claims that the Coca-Cola Company intentionally changed to an inferior formula with New Coke , with the intent either of driving up demand for the original product or permitting the reintroduction of the original with a new formula using cheaper ingredients. [ 1 ] Coca-Cola president Donald Keough rebutted this charge: \"The truth is, we're not that dumb, and we're not that smart.\" [ 2 ]",
+    "concepts_spacy": [
+      "Coca-Cola president Donald Keough",
+      "the Coca-Cola Company",
+      "New Coke",
+      "the original product",
+      "an inferior formula",
+      "cheaper ingredients"
+    ]
+  },
+  {
+    "title": "Death of Nero",
+    "summary": "In ancient times, widespread conspiracy theories were circulated pertaining to the death of the Roman emperor Nero , who committed suicide in 68 AD. [ 1 ] Some of these theories claimed that Nero had actually faked his death and was secretly still alive, but in hiding, plotting to reestablish his reign. [ 1 ] In most of these stories, he was said to have fled to the East, where he was still influential. [ 1 ] Other theories held that Nero would return from the dead to retake his throne. [ 1 ] Many early Christians feared Nero's return to resume his vicious anti-Christian persecutions . [ 1 ] The Book of Revelation may allude to these conspiracy theories in its description of the slaughtered head returned to life. [ 1 ]",
+    "concepts_spacy": [
+      "The Book of Revelation",
+      "Many early Christians",
+      "Nero's return",
+      "the East",
+      "widespread conspiracy theories",
+      "these conspiracy theories"
+    ]
+  },
+  {
+    "title": "John F. Kennedy assassination",
+    "summary": "In modern times, multiple conspiracy theories concerning the assassination of John F. Kennedy in 1963 have emerged. [ 1 ] Vincent Bugliosi estimated that over 1,000 books had been written about the Kennedy assassination, [ 2 ] at least ninety percent of which are works supporting the view that there was a conspiracy. [ 2 ] As a result of this, the Kennedy assassination has been described as \"the mother of all conspiracies\". [ 3 ] [ 4 ] The countless individuals and organizations that have been accused of involvement in the Kennedy assassination include the CIA , the Mafia , sitting Vice President Lyndon B. Johnson , Cuban Prime Minister Fidel Castro , the KGB , or even some combination thereof. [ 5 ] [ 2 ] It is also frequently asserted that the United States federal government intentionally covered up crucial information in the aftermath of the assassination to prevent the conspiracy from being discovered. [ 5 ]",
+    "concepts_spacy": [
+      "the United States federal government",
+      "Cuban Prime Minister Fidel Castro",
+      "Vice President Lyndon B. Johnson",
+      "the Kennedy assassination",
+      "Vincent Bugliosi",
+      "John F. Kennedy"
+    ]
+  },
+  {
+    "title": "Disappearance of Harold Holt",
+    "summary": "At approximately 12:20pm on 17 December 1967, then– Prime Minister of Australia Harold Holt , disappeared while swimming at Cheviot Beach , near the town of Portsea in Victoria . While it is presumed that Holt drowned, the topic is still described as one of the biggest unsolved mysteries in Australian history and has spawned many conspiracy theories. [ 1 ] The conspiracy theories have been widely criticised by the public and by members of Holt's own family.",
+    "concepts_spacy": [
+      "Holt's own family",
+      "Cheviot Beach",
+      "Harold Holt",
+      "Australia",
+      "Victoria",
+      "Portsea"
+    ]
+  },
+  {
+    "title": "Death of other prominent figures",
+    "summary": "The deaths of prominent figures of all types attract conspiracy theorists, sometimes elaborating on historically verified conspiracies such as the assassination of US President Abraham Lincoln , [ 1 ] as well as the deaths of Martin Luther King Jr. , [ 2 ] Mustafa Kemal Atatürk , [ 3 ] Eric V of Denmark , Dmitry Ivanovich , Sheikh Rahman , Yitzhak Rabin , [ 4 ] Zachary Taylor , [ 5 ] George S. Patton , [ 6 ] [ 7 ] Diana, Princess of Wales , [ 8 ] Dag Hammarskjöld , [ 9 ] Kurt Cobain , Michael Jackson , Marilyn Monroe , Tupac Shakur , [ 10 ] Wolfgang Amadeus Mozart , [ 11 ] John Lennon , Jimi Hendrix , the Notorious B.I.G. , [ 10 ] Pope John Paul I , Jill Dando , Olof Palme , [ 12 ] Linkin Park member Chester Bennington , [ 13 ] Paul Walker , biological warfare authority David Kelly , [ 14 ] Haitian president Jovenel Moïse , [ 15 ] Indian freedom fighter Subhas Chandra Bose , [ 16 ] [ 17 ] [ 18 ] and Bollywood star Sushant Singh Rajput . [ 19 ]",
+    "concepts_spacy": [
+      "biological warfare authority David Kelly",
+      "Bollywood star Sushant Singh Rajput",
+      "US President Abraham Lincoln",
+      "Wolfgang Amadeus Mozart",
+      "Martin Luther King Jr.",
+      "Mustafa Kemal Atatürk"
+    ]
+  },
+  {
+    "title": "New World Order",
+    "summary": "The New World Order theory states that a group of international elites control governments, industry, and media organizations, with the goal of establishing global hegemony. They are alleged to be implicated in most of the major wars of the last two centuries, to carry out secretly staged events, and to deliberately manipulate economies.",
+    "concepts_spacy": [
+      "New World Order The New World Order",
+      "The New World Order theory",
+      "deliberately manipulate economies",
+      "the last two centuries",
+      "international elites",
+      "media organizations"
+    ]
+  },
+  {
+    "title": "Predictive programming",
+    "summary": "Many theorists allege that the contents of fictional media, in a process called \"predictive programming\", are manipulated to reference planned false flags , technological innovations, social changes, and other future events. [ 1 ] These references are understood to be a conditioning and brainwashing tool, such that the public becomes more accepting of these events than they would be otherwise. [ 1 ] [ 2 ] Predictive programming has been used to explain events such as the September 11 attacks and COVID-19 pandemic , and has been connected with media such as Die Hard , The Simpsons , and Contagion . [ 1 ] [ 3 ]",
+    "concepts_spacy": [
+      "The Simpsons",
+      "a conditioning and brainwashing tool",
+      "Predictive programming",
+      "These references",
+      "fictional media",
+      "Many theorists"
+    ]
+  },
+  {
+    "title": "George Soros",
+    "summary": "Hungarian -American investor George Soros has been the subject of conspiracy theories since the 1990s. Soros has used his wealth to promote many political, social, educational and scientific causes, disbursing grants totaling an estimated $11 billion up to 2016. However, theories tend to assert that Soros is in control of a large portion of the world's wealth and governments, and that he secretly funds a large range of persons and organizations for nefarious purposes, such as antifa , which some conspiracy theorists claim is a single far-left militant group. Such ideas have been promoted by Viktor Orbán , Donald Trump , [ 1 ] Rudy Giuliani , [ 2 ] Joseph diGenova , [ 3 ] Bill O'Reilly , Roy Moore , Alex Jones , Paul Gosar , and Ben Garrison . Soros conspiracy theories are sometimes linked to antisemitic conspiracy theories. [ 4 ]",
+    "concepts_spacy": [
+      "George Soros Hungarian -American investor George Soros",
+      "Joseph diGenova",
+      "Rudy Giuliani",
+      "Bill O'Reilly",
+      "Viktor Orbán",
+      "Donald Trump"
+    ]
+  },
+  {
+    "title": "Freemasonry",
+    "summary": "Conspiracy theories concerning the Freemasons have proliferated since the 18th century. Theorists have alleged that Freemasons control large parts of the economies or judiciaries of a number of countries, and have alleged Masonic involvement in the British enquiry regarding the sinking of the Titanic and in the crimes of Jack the Ripper . [ 1 ] [ 2 ] Notable among theorists has been American inventor Samuel Morse , who in 1835 published a book of his own conspiracy theories . [ 3 ] Freemason conspiracy theories have also been linked to certain antisemitic conspiracy theories .",
+    "concepts_spacy": [
+      "Freemasonry Conspiracy theories",
+      "American inventor Samuel Morse",
+      "Freemason conspiracy theories",
+      "Jack the Ripper",
+      "Masonic",
+      "certain antisemitic conspiracy theories"
+    ]
+  },
+  {
+    "title": "<i>Üst akıl</i>",
+    "summary": "Conspiracy theories in Turkey started to dominate public discourse during the late reign of the Justice and Development Party and Recep Tayyip Erdoğan . [ 1 ] In 2014, Erdoğan coined the term üst akıl (\"mastermind\") to denote the alleged command and control institution, somewhat ambiguously placed with the government of the United States, in a comprehensive conspiracy to weaken or even dismember Turkey, by orchestrating every political actor and action perceived hostile by Turkey. [ 2 ] [ 3 ] [ 1 ] Erdoğan as well as the Daily Sabah newspaper have on multiple occasions alleged that very different non-state actors—like the Salafi jihadist Islamic State of Iraq and the Levant (ISIL), the libertarian socialist Kurdistan Workers' Party (PKK) and supporters of Fethullah Gülen —were attacking Turkey at the same time in a well-coordinated campaign. [ 4 ]",
+    "concepts_spacy": [
+      "the libertarian socialist Kurdistan Workers' Party",
+      "the Justice and Development Party",
+      "Üst akıl</i> Conspiracy theories",
+      "the Daily Sabah newspaper",
+      "Recep Tayyip Erdoğan",
+      "the Salafi jihadist"
+    ]
+  },
+  {
+    "title": "Israel animal spying",
+    "summary": "There are conspiracy theories alleging that Israel uses animals to conduct espionage or to attack people. These are often associated with conspiracy theories about Zionism . Matters of interest to theorists include a series of shark attacks in Egypt in 2010 , Hezbollah's accusations of the use of \"spying\" eagles, [ 1 ] and the 2011 capture of a griffon vulture carrying an Israeli-labeled satellite tracking device . [ 2 ]",
+    "concepts_spacy": [
+      "an Israeli-labeled satellite tracking device",
+      "Hezbollah's accusations",
+      "Israel animal",
+      "Egypt",
+      "conspiracy theories",
+      "a griffon vulture"
+    ]
+  },
+  {
+    "title": "Harold Wilson",
+    "summary": "Numerous persons, including former MI5 officer Peter Wright and Soviet defector Anatoliy Golitsyn , have alleged that British Prime Minister Harold Wilson was secretly a KGB spy . Historian Christopher Andrew has lamented that a number of people have been \"seduced by Golitsyn's fantasies\". [ 1 ] [ 2 ] [ 3 ]",
+    "concepts_spacy": [
+      "British Prime Minister Harold Wilson",
+      "Historian Christopher Andrew",
+      "Golitsyn's fantasies",
+      "Anatoliy Golitsyn",
+      "Peter Wright",
+      "a KGB spy"
+    ]
+  },
+  {
+    "title": "Malala Yousafzai",
+    "summary": "Conspiracy theories concerning Malala Yousafzai are widespread in Pakistan , elements of which originate from a 2013 satirical piece in Dawn . These theories variously allege that she is a Western spy, or that her attempted murder by the Taliban in 2012 was a secret operation to further discredit the Taliban, and was organized by her father and the CIA and carried out by actor Robert de Niro disguised as an Uzbek homeopath . [ 1 ] [ 2 ] [ 3 ] [ 4 ]",
+    "concepts_spacy": [
+      "Malala Yousafzai Conspiracy theories",
+      "actor Robert de Niro",
+      "an Uzbek homeopath",
+      "the Taliban",
+      "Pakistan",
+      "the CIA"
+    ]
+  },
+  {
+    "title": "Antisemitism",
+    "summary": "Since at least the Middle Ages , antisemitism has featured elements of conspiracy theory. In medieval Europe it was widely believed that Jews poisoned wells, had been responsible for the death of Jesus , and ritually consumed the blood of Christians . The second half of the 19th century saw the emergence of notions that Jews and/or Freemasons were plotting to establish control over the world. Forged evidence has been presented to spread the notion that Jews were responsible for the propagation of communism , or the hoax The Protocols of the Elders of Zion (1903), which outlines a supposed high council of Jews planning to control the world. [ 1 ] Such antisemitic conspiracy theories became central to the worldview of Adolf Hitler . Antisemitic theories persist today concerning banking, [ 2 ] Hollywood, the news media and a purported Zionist Occupation Government of the United States. [ 3 ] [ 4 ] [ 5 ] These theories all allege plots to establish a world tyranny . [ 6 ]",
+    "concepts_spacy": [
+      "The Protocols of the Elders of Zion",
+      "Zionist Occupation Government",
+      "at least the Middle Ages",
+      "the United States",
+      "medieval Europe",
+      "Adolf Hitler"
+    ]
+  },
+  {
+    "title": "Anti-Armenianism",
+    "summary": "Conspiracy theories that allege that the Armenians wield secret political power are prevalent in Azerbaijan [ 1 ] and have been promoted by the government, [ 2 ] including President Ilham Aliyev . [ 3 ] [ 4 ] [ 5 ] Turkish Foreign Minister Mevlüt Çavuşoğlu has claimed that the Russian media is run by Armenians. [ 6 ] American writer and disbarred lawyer Samuel Weems [ 7 ] has claimed that the Armenian genocide was a hoax designed to defraud Christian nations of billions of dollars, and that the Armenian Church instigates terrorist attacks. [ 8 ] Filmmaker Davud Imanov has accused the Armenians of plotting against Azerbaijan and has claimed that the Karabakh movement was a plot by the CIA to destroy the Soviet Union . [ 9 ]",
+    "concepts_spacy": [
+      "Turkish Foreign Minister Mevlüt Çavuşoğlu",
+      "Anti-Armenianism Conspiracy theories",
+      "President Ilham Aliyev",
+      "Filmmaker Davud Imanov",
+      "the Karabakh movement",
+      "the Armenian Church"
+    ]
+  },
+  {
+    "title": "Anti-Baháʼísm",
+    "summary": "Iran 's Baháʼí Faith minority has been the target of conspiracy theories alleging involvement with hostile powers. Iranian government officials and others have claimed that Baháʼís have been variously agents of the Russian , British , American or Israeli governments . [ 1 ] An apocryphal and historically inaccurate book published in Iran, entitled The Memoirs of Count Dolgoruki , details a theory that the Bahá'ís intend to destroy Islam. Such anti-Baháʼí accusations have been dismissed as having no factual foundation. [ 2 ] [ 3 ] [ 4 ]",
+    "concepts_spacy": [
+      "Anti-Baháʼísm Iran 's Baháʼí Faith minority",
+      "The Memoirs of Count Dolgoruki",
+      "the Bahá'ís",
+      "Islam",
+      "the Russian , British , American or Israeli governments",
+      "Iranian government officials"
+    ]
+  },
+  {
+    "title": "Anti-Catholicism",
+    "summary": "Since the Protestant Reformation of the 16th century, theories about Catholic conspiracies have taken many forms, including the 17th-century Popish Plot allegations, [ 1 ] claims by persons such as William Blackstone that Catholics posed a secret threat to Britain, and numerous writings by authors such as Samuel Morse , Rebecca Reed , Avro Manhattan , Jack Chick and Alberto Rivera . Theorists often claim that the Pope is the Antichrist , accuse Catholics of suppressing evidence incompatible with Church teachings, and describe Catholics as being involved with secret evil rituals, crimes, and other plots.",
+    "concepts_spacy": [
+      "Anti-Catholicism Since the Protestant Reformation of",
+      "William Blackstone",
+      "Avro Manhattan",
+      "Alberto Rivera",
+      "Samuel Morse",
+      "Rebecca Reed"
+    ]
+  },
+  {
+    "title": "Antichrist",
+    "summary": "Apocalyptic prophecies, particularly Christian claims about the end times , have inspired a range of conspiracy theories. Many of these cite the Antichrist , a leader who will supposedly create an oppressive world empire. Countless figures have been called Antichrist, including Holy Roman Emperor Frederick II , Russian emperor Peter the Great , Saladin , Pope John XXII , Benito Mussolini , Barack Obama , French Emperor Napoleon Bonaparte, and German Führer Adolf Hitler . [ 1 ] [ 2 ] [ 3 ] [ 4 ]",
+    "concepts_spacy": [
+      "French Emperor Napoleon Bonaparte",
+      "Holy Roman Emperor Frederick II",
+      "German Führer Adolf Hitler",
+      "Antichrist Apocalyptic",
+      "Russian emperor Peter",
+      "Benito Mussolini"
+    ]
+  },
+  {
+    "title": "Bible and Jesus",
+    "summary": "Bible conspiracy theories posit that significant parts of the New Testament are false, or have been omitted. Various groups both real (such as the Vatican ) and fake (such as the Priory of Sion ) are said to suppress relevant information concerning, for example, the dating of the Shroud of Turin . [ 1 ] Much of this line of conspiracy theory has been stimulated by a debunked book titled The Holy Blood and the Holy Grail (1982), which claimed that Jesus and Mary Magdalene were lovers and that their offspring and descendants were secretly hidden in Europe following the death of Jesus, from whom the then-living French draughtsman Pierre Plantard claimed descent. Interest in this hoax saw a resurgence following the publication of Dan Brown 's 2003 novel The Da Vinci Code . [ 2 ] The Gospel of Afranius , an atheistic Russian work published in 1995 with an English translation published in 2022, proposes politically motivated gaslighting as the origin of the foundational Christian belief in the resurrection of Jesus . [ 3 ]",
+    "concepts_spacy": [
+      "Bible and Jesus Bible conspiracy theories",
+      "The Gospel of Afranius",
+      "the Shroud of Turin",
+      "the Priory of Sion",
+      "the New Testament",
+      "The Da Vinci Code"
+    ]
+  }
+]

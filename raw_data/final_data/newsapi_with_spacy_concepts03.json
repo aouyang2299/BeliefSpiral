@@ -6,69 +6,109 @@
       "Covid.gov",
       "a ‘lab leak’ conspiracy website",
       "the government website",
+      "you",
+      "information",
+      "a page",
       "the conspiracy theory",
+      "the virus",
+      "a lab",
+      "the website",
       "a prominent banner",
-      "information"
+      "the words",
+      "“Lab"
     ]
   },
   {
     "title": "Conspiracy Theorist Laura Loomer Gets NSA Director Fired After Meeting With Trump",
     "summary": "Loomer is suing Bill Maher for defamation after the comedian said she was sleeping with the president.",
     "concepts_spacy": [
-      "Conspiracy Theorist Laura Loomer",
-      "NSA Director Fired",
+      "Conspiracy Theorist",
+      "Laura Loomer",
+      "NSA",
       "Trump Loomer",
       "Bill Maher",
-      "the president",
-      "the comedian"
+      "Conspiracy Theorist Laura Loomer",
+      "NSA Director Fired",
+      "Meeting",
+      "defamation",
+      "the comedian",
+      "she",
+      "the president"
     ]
   },
   {
     "title": "This ICE-snitching app is actually promoting a meme coin",
     "summary": "Right-wing influencers are shilling an app that purportedly lets people earn crypto for reporting sightings of undocumented immigrants. ICERAID, a âGovFi protocol that delegates intelligence gathering tasks to citizens,â has recently been promoted by the …",
     "concepts_spacy": [
-      "a meme coin Right-wing influencers",
-      "intelligence gathering tasks",
-      "undocumented immigrants",
       "This ICE-snitching app",
+      "a meme coin Right-wing influencers",
+      "an app",
+      "people",
+      "crypto",
+      "sightings",
+      "undocumented immigrants",
       "a âGovFi protocol",
-      "sightings"
+      "intelligence gathering tasks",
+      "citizens"
     ]
   },
   {
     "title": "Blood brothers - bonds and betrayal on a rugby pitch",
     "summary": "Tom Williams was part of a conspiracy that united and then divided a Harlequins dressing room, before the truth rocked rugby to its core.",
     "concepts_spacy": [
-      "a Harlequins dressing room",
       "Tom Williams",
       "Blood brothers - bonds",
+      "betrayal",
       "a rugby pitch",
+      "part",
       "a conspiracy",
-      "the truth"
+      "a Harlequins dressing room",
+      "the truth",
+      "rugby",
+      "its core"
     ]
   },
   {
     "title": "Cops can’t do cell tower mass surveillance ‘dumps,’ court rules",
     "summary": "A federal judge in Nevada has ruled that it’s unconstitutional to obtain swaths of cellular records through “tower dumps” — but will still let police get away with using it as evidence, as reported earlier by 404 Media and Court Watch. With tower dumps, autho…",
     "concepts_spacy": [
-      "Court Watch",
-      "tower dumps",
       "Nevada",
+      "Media",
+      "Court Watch",
       "autho",
+      "Cops",
       "cell tower mass surveillance",
-      "cellular records"
+      "‘dumps",
+      "court",
+      "A federal judge",
+      "swaths",
+      "cellular records",
+      "tower dumps",
+      "police",
+      "evidence",
+      "404 Media"
     ]
   },
   {
     "title": "NSA director fired after Trump’s meeting with right-wing influencer Laura Loomer",
     "summary": "General Timothy Haugh, the director of the National Security Agency and US Cyber Command, was fired on Thursday, according to a report from The Washington Post. His removal reportedly occurred just one day after right-wing activist Laura Loomer pushed for his…",
     "concepts_spacy": [
-      "right-wing influencer Laura Loomer General Timothy Haugh",
-      "right-wing activist Laura Loomer",
+      "NSA",
+      "Trump",
+      "Laura Loomer",
+      "Timothy Haugh",
       "the National Security Agency",
-      "The Washington Post",
       "US Cyber Command",
-      "NSA director"
+      "Thursday",
+      "The Washington Post",
+      "NSA director",
+      "Trump’s meeting",
+      "right-wing influencer Laura Loomer General Timothy Haugh",
+      "the director",
+      "a report",
+      "His removal",
+      "right-wing activist Laura Loomer",
+      "his"
     ]
   },
   {
@@ -77,9 +117,11 @@
     "concepts_spacy": [
       "Durham Police",
       "Barry Dawson",
-      "Saturday",
       "Stanley",
+      "Saturday",
+      "Victim",
       "own window",
+      "police",
       "an update"
     ]
   },
@@ -88,11 +130,16 @@
     "summary": "Vallow Daybell is charged with conspiracy to commit first-degree murder in the death of her husband, Charles Vallow, in Arizona in 2019.",
     "concepts_spacy": [
       "Lori Vallow Daybell",
+      "Vallow Daybell",
+      "first",
       "Charles Vallow",
       "Arizona",
-      "first-degree murder",
       "a new murder trial",
-      "conspiracy"
+      "her own attorney Vallow Daybell",
+      "conspiracy",
+      "first-degree murder",
+      "the death",
+      "her husband"
     ]
   },
   {
@@ -100,77 +147,108 @@
     "summary": "The chaos inside the White House national-security team persists.",
     "concepts_spacy": [
       "The Conspiracy Theorist Advising Trump",
-      "the White House national-security team",
-      "The chaos"
+      "White House",
+      "The chaos",
+      "the White House national-security team"
     ]
   },
   {
     "title": "NSA Chief Ousted Amid Trump Loyalty Firing Spree",
     "summary": "Plus: Another DOGE operative allegedly has a history in the hacking world, and Donald Trump’s national security adviser apparently had way more Signal chats than previously known.",
     "concepts_spacy": [
-      "Donald Trump’s national security adviser",
       "Trump Loyalty Firing Spree Plus",
-      "more Signal chats",
+      "DOGE",
+      "Donald Trump’s",
+      "Signal",
       "NSA Chief",
+      "Trump Loyalty",
+      "Firing Spree Plus",
       "Another DOGE operative",
-      "the hacking world"
+      "a history",
+      "the hacking world",
+      "Donald Trump’s national security adviser",
+      "more Signal chats"
     ]
   },
   {
     "title": "Far-Right Influencers Are Hosting a $10K-Per-Person Matchmaking Weekend to Repopulate the Earth",
     "summary": "The Natal Conference, which costs up to $10,000 to attend, features multiple matchmaking strategy sessions and on-site ministers so attendees can get married, WIRED has learned.",
     "concepts_spacy": [
-      "Repopulate the Earth The Natal Conference",
       "Far-Right Influencers Are Hosting",
+      "10K",
+      "Repopulate the Earth The Natal Conference",
+      "up to $10,000",
+      "Far-Right Influencers",
       "Person",
-      "WIRED",
+      "the Earth",
+      "The Natal Conference",
+      "which",
       "multiple matchmaking strategy sessions",
-      "attendees"
+      "site",
+      "attendees",
+      "WIRED"
     ]
   },
   {
     "title": "Elon Musk is paying voters again ahead of the Wisconsin Supreme Court election",
     "summary": "Not satisfied with effectively buying a co-president role in Donald Trump’s administration, Elon Musk has turned his attention — and money — towards a key race in the swing state of Wisconsin. The billionaire’s America PAC is claiming to give $100 to register…",
     "concepts_spacy": [
-      "the Wisconsin Supreme Court election",
-      "Donald Trump’s administration",
-      "The billionaire’s America PAC",
       "Elon Musk",
+      "the Wisconsin Supreme Court",
+      "Donald Trump’s",
+      "Wisconsin",
+      "’s America PAC",
+      "voters",
+      "the Wisconsin Supreme Court election",
       "a co-president role",
-      "the swing state"
+      "Donald Trump’s administration",
+      "his attention",
+      "money",
+      "a key race",
+      "the swing state",
+      "The billionaire’s America PAC"
     ]
   },
   {
     "title": "RFK Jr Tells His Favorite Anti-Vaccine Group to Delete Mock CDC Website",
     "summary": "Children's Health Defense published an anti-vaccine webpage that appeared almost identical to the CDC site.",
     "concepts_spacy": [
-      "Mock CDC Website Children's Health Defense",
       "RFK Jr Tells",
-      "the CDC site",
+      "CDC",
+      "RFK Jr",
+      "His Favorite Anti-Vaccine Group",
       "Delete",
-      "an anti-vaccine webpage"
+      "Mock CDC Website Children's Health Defense",
+      "an anti-vaccine webpage",
+      "the CDC site"
     ]
   },
   {
     "title": "Why Right-Wing Influencers Keep Saying the Jews Killed JFK",
     "summary": "Social media supercharges conspiracy theories. Anti-Semitism is one of the oldest.",
     "concepts_spacy": [
-      "JFK Social media supercharges conspiracy theories",
-      "Right-Wing Influencers",
       "Anti-Semitism",
-      "the Jews"
+      "Right-Wing Influencers",
+      "the Jews",
+      "JFK Social media supercharges conspiracy theories",
+      "Anti",
+      "Semitism"
     ]
   },
   {
     "title": "Investigation into prison officer attack by Manchester bomber continues",
     "summary": "Counter-terror police say they are keeping an \"open mind\" as they investigate the attack at HMP Frankland.",
     "concepts_spacy": [
-      "Manchester bomber",
-      "HMP Frankland",
+      "Manchester",
       "Counter",
+      "Investigation",
       "prison officer attack",
+      "Manchester bomber",
       "Counter-terror police",
-      "Investigation"
+      "they",
+      "an \"open mind",
+      "the attack",
+      "HMP Frankland"
     ]
   },
   {
@@ -178,20 +256,22 @@
     "summary": "The FDA also refused to publicize an outbreak of E. coli, according to a new report.",
     "concepts_spacy": [
       "FDA Guts Food Safety Testing",
-      "The FDA",
-      "a new report",
+      "FDA",
       "Latest Move",
+      "The FDA",
       "an outbreak",
-      "E. coli"
+      "E. coli",
+      "a new report"
     ]
   },
   {
     "title": "Laura Loomer Has the Dumbest Possible Conspiracy Theory for the Anti-Trump Protests",
     "summary": "Our reality just keeps getting stupider.",
     "concepts_spacy": [
+      "Laura Loomer",
       "the Dumbest Possible Conspiracy Theory",
       "the Anti-Trump Protests",
-      "Laura Loomer",
+      "Our reality",
       "stupider"
     ]
   },
@@ -199,35 +279,60 @@
     "title": "Get dozens of Delta Green’s Ennie-award winning stories for just $25",
     "summary": "Drawing from inspiration like The X-Files, Control, Call of Cthulhu, and other conspiracy-laden works of fiction, Delta Green is a TTRPG full of sleeper agents, secretive institutions, and otherworldly phenomena with a healthy dose of trauma sprinkled in for …",
     "concepts_spacy": [
-      "Delta Green’s Ennie-award",
+      "dozens",
+      "Delta Green’s",
+      "just $25",
       "The X-Files, Control",
+      "Delta Green",
       "TTRPG",
+      "Delta Green’s Ennie-award",
+      "stories",
+      "inspiration",
+      "The X-Files",
+      "Control",
+      "Call",
+      "Cthulhu",
       "other conspiracy-laden works",
+      "fiction",
+      "a TTRPG",
+      "sleeper agents",
       "secretive institutions",
-      "otherworldly phenomena"
+      "otherworldly phenomena",
+      "a healthy dose",
+      "trauma"
     ]
   },
   {
     "title": "South Korea's president has been removed from power: What happens now?",
     "summary": "The constitutional court unanimously upheld the impeachment of Yoon Suk Yeol.",
     "concepts_spacy": [
-      "South Korea's president",
+      "South Korea's",
       "Yoon Suk Yeol",
+      "South Korea's president",
+      "power",
+      "What",
       "The constitutional court",
-      "the impeachment",
-      "power"
+      "the impeachment"
     ]
   },
   {
     "title": "HHS will review guidance on the addition of fluoride to drinking water",
     "summary": "HHS Secretary Robert F. Kennedy Jr. has blamed the addition of fluoride — a common, naturally occurring mineral — for a host of health issues. The CDC says the policy has reduced cavities by some 25%.",
     "concepts_spacy": [
-      "drinking water HHS Secretary Robert F. Kennedy Jr.",
-      "The CDC",
-      "a common, naturally occurring mineral",
-      "health issues",
+      "HHS",
+      "Robert F. Kennedy Jr.",
+      "CDC",
+      "some 25%",
+      "guidance",
       "the addition",
-      "the policy"
+      "fluoride",
+      "drinking water HHS Secretary Robert F. Kennedy Jr.",
+      "a common, naturally occurring mineral",
+      "a host",
+      "health issues",
+      "The CDC",
+      "the policy",
+      "cavities"
     ]
   }
 ]
