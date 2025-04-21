@@ -16,7 +16,7 @@
     if (!Array.isArray(results) || results.length !== 5) {
       document.getElementById('graphSvg').outerHTML =
         '<div class="no-results">' +
-        '<p>No results found. Enter a new belief and hit Search.</p>' +
+        '<p>No results found. Enter a new belief and hit "Search".</p>' +
         '</div>';
       return;
     }
