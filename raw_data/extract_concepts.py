@@ -114,7 +114,7 @@ def extract_spacy_concepts(title: str, summary: str, top_n: int = 6) -> list[str
 if __name__ == "__main__":
     # manually list whichever JSON files you need
     input_paths = [
-        "wiki_180.json",
+        "nyt_200.json",
         # add more here...
     ]
     out_dir = Path("final_data")
