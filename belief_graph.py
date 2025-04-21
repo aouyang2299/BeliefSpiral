@@ -94,16 +94,48 @@ def _find_best_node(query):
     # require a high threshold for fuzzy matching
     return best if score >= 0.75 else None
 
+# def similar_to(query, topn=5):
+#     node = _find_best_node(query)
+#     if not node:
+#         print(f"✗ No node match for '{query}' (tried singular='{query.rstrip('s')}').")
+#         return []
+#     print(f"↳ Mapping '{query}' → node «{node}»")
+#     sims = model.wv.most_similar(node, topn=topn)
+#     return [c for c, _ in sims]
+
+# curr problem - nodes that already appeared will appear again in later searches 
+# ex. trump ==> eric adams ==> trump 
+
+# new function similar_to()
+
+# 👇 Added at the top (after imports)
+_seen_queries = set()
+
+
 def similar_to(query, topn=5):
     node = _find_best_node(query)
     if not node:
         print(f"✗ No node match for '{query}' (tried singular='{query.rstrip('s')}').")
         return []
+
+    # 👇 Skip nodes we've already shown before
+    if node in _seen_queries:
+        print(f"✓ Skipping node '{node}' (already seen)")
+        return []
+
+    _seen_queries.add(node)  # 👈 Mark this node as seen
     print(f"↳ Mapping '{query}' → node «{node}»")
+
     sims = model.wv.most_similar(node, topn=topn)
-    return [c for c, _ in sims]
+    return [c for c, _ in sims if c not in _seen_queries]
+
+
 
 # Examples
 for q in ["trump", "vaccines", "moon", "right-wing"]:
     print(f"\nQuery: {q!r}")
     print(" Related:", similar_to(q))
+
+
+
+    
