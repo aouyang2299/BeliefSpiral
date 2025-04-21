@@ -1,16 +1,5 @@
 
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
-      color: #333;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px;
-    }
-    h1 {
-      margin-bottom: 20px;
-    }
+    
     form {
       display: flex;
       margin-bottom: 30px;
@@ -55,4 +44,49 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
 
+    body, html { 
+      margin:0; 
+      padding: 40px; 
+      height:100%; 
+      background:#000; 
+      color:#fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center
+      
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
     
+    #graphContainer { width:200%; height:80vh }
+
+    svg { width:100%; height:100%; display:block }
+    .node-box {
+      fill: #222;
+      stroke: #fff;
+      stroke-width: 2;
+      rx: 6; ry: 6;
+      cursor: pointer;             
+    }
+    .edge {
+      stroke: #aaa;
+      stroke-width: 2;
+    }
+    .label {
+      font-family: sans-serif;
+      font-size: 18px;
+      text-anchor: middle;
+      dominant-baseline: middle;
+      fill: #fff;
+      cursor: pointer;             
+    }
+    form input, form button {
+      background: #333;
+      color: #fff;
+      border: 1px solid #555;
+    }
+    form input::placeholder {
+      color: #bbb;
+    }

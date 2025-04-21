@@ -11,15 +11,11 @@
   
 </head>
 <body>
-  <h1>Belief Graph Explorer</h1>
-  <form method="post">
-    <input name="query" placeholder="Enter a belief" value="{{ query }}" required>
-    <button type="submit">Search</button>
-  </form>
+  {% include 'partials/_heading.html' %}
+
 
   <div id="graph-container">
     <div class="results">
-    <h2>No related beliefs</h2>
     </div>
   </div>
 

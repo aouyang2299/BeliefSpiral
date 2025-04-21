@@ -13,7 +13,6 @@ from belief_graph import similar_to
 
 app = Flask(
     __name__,
-   # <― point at your static files
     static_url_path='/static'                               # <― mount them at /static
 )
 
@@ -27,8 +26,7 @@ def index():
         results   = similar_to(query)
         return render_template('template2.html', results=results, query=query)
         
-    if not query or all(r == '' for r in results):
-            return render_template('no_results.html', query=query)
+    return render_template('welcome.html', query=query)
 
     
 
