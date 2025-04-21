@@ -4,13 +4,39 @@ import networkx as nx
 from node2vec import Node2Vec
 
 # ── 1) Load your JSON of snippets with spaCy concepts ─────────────────────────
-DATA_PATH = "raw_data/final_data/newsapi_with_spacy_concepts.json"
-with open(DATA_PATH, encoding="utf8") as f:
-    records = json.load(f)
+import json
+from pathlib import Path
+
+# 1) Manually list your files ──────────────────────────────────────────────
+input_files = [
+    "raw_data/final_data/newsapi_100_with_spacy_concepts010_full.json",
+    "raw_data/final_data/reddit_500_with_spacy_concepts010.json",
+    "raw_data/final_data/wiki_180_with_spacy_concepts010_full.json"
+]
+
+# 2) Load & concatenate ────────────────────────────────────────────────────
+all_records = []
+for path_str in input_files:
+    fp = Path(path_str)
+    if not fp.exists():
+        print(f"⚠️ File not found: {fp}")
+        continue
+    with fp.open(encoding="utf8") as f:
+        data = json.load(f)
+        all_records.extend(data)
+
+# 3) Write out merged file ─────────────────────────────────────────────────
+output_fp = Path("raw_data/final_data") / "all_spacy_concepts_combined.json"
+output_fp.parent.mkdir(exist_ok=True)
+with output_fp.open("w", encoding="utf8") as f:
+    json.dump(all_records, f, ensure_ascii=False, indent=2)
+
+print(f"✅ Merged {len(all_records)} records into {output_fp}")
+
 
 # ── 2) Count concept co‑occurrences per snippet ───────────────────────────────
 edge_counts = Counter()
-for rec in records:
+for rec in all_records:
     concepts = rec.get("concepts_spacy", [])
     # all unordered pairs within this snippet
     for i in range(len(concepts)):
