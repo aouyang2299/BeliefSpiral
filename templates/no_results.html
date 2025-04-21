@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -16,22 +17,11 @@
     <button type="submit">Search</button>
   </form>
 
-  {% if result %}
   <div id="graph-container">
-    <!-- This is the center node -->
     <div class="results">
-      <h2>Top Related Beliefs to "{{ query }}"</h2>
-      <ul>
-      {% for belief in result %}
-        <li>{{ belief }}</li>
-        {% endfor %}
-      </ul>
-    </div>
-  {% else %}
     <h2>No related beliefs</h2>
-  {% endif %}
-
-  <script src="{{ url_for('static', filename='js.js') }}"></script>
+    </div>
+  </div>
 
 </body>
 

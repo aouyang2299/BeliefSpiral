@@ -24,8 +24,13 @@ def index():
     query = ''
     if request.method == 'POST':
         query = request.form.get('query', '')
-        result = similar_to(query)
-    return render_template('template.html', result=result, query=query)
+        results   = similar_to(query)
+        return render_template('template2.html', results=results, query=query)
+        
+    if not query or all(r == '' for r in results):
+            return render_template('no_results.html', query=query)
+
+    
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True, use_reloader=False)
