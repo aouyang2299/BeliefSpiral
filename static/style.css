@@ -3,23 +3,24 @@
   font-family: milker;
   src: url(milker/Milker.otf);
 }
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
 
 body, html { 
   margin:0; 
   height:100%; 
-  background:#000; 
+  background-color:#000; 
+  font-family: 'Open Sans', sans-serif;
   color:#fff;
-  font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center 
 }
 
 h1 {
-  margin-top:70px;
-  margin-bottom: 30px;
+  margin: 70px 0 30px;
   font-family: milker;
-  font-size: 70px;
+  font-size: 4rem;           /* scalable unit instead of hard px */
 }
 
 #graphContainer { width:200%; height:80vh }
