@@ -1,88 +1,95 @@
 
+@font-face {
+  font-family: milker;
+  src: url(milker/Milker.otf);
+}
 
-    body, html { 
-      margin:0; 
-      height:100%; 
-      background:#000; 
-      color:#fff;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center 
-    }
+body, html { 
+  margin:0; 
+  height:100%; 
+  background:#000; 
+  color:#fff;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center 
+}
 
-    h1 {
-      margin-bottom: 20px;
-    }
-    
-    #graphContainer { width:200%; height:80vh }
+h1 {
+  margin-top:70px;
+  margin-bottom: 30px;
+  font-family: milker;
+  font-size: 70px;
+}
 
-    svg { width:100%; height:100%; display:block }
+#graphContainer { width:200%; height:80vh }
 
-    .node-box {
-      fill: #222;
-      stroke: #fff;
-      stroke-width: 2;
-      rx: 6; ry: 6;
-      cursor: pointer;             
-    }
-    .edge {
-      stroke: #aaa;
-      stroke-width: 2;
-    }
-    .label {
-      font-family: sans-serif;
-      font-size: 18px;
-      text-anchor: middle;
-      dominant-baseline: middle;
-      fill: #fff;
-      cursor: pointer;             
-    }
+svg { width:100%; height:100%; display:block }
 
-    form input, form button {
-      background: #333;
-      color: #fff;
-      border: 1px solid #555;
-    }
-    form {
-      display: flex;
-      margin: 50px auto 30px;    /* 50px top, auto left/right to center, 30px bottom */
-      width: 100%;
-      max-width: 600px;
-    }
-    input[name="query"] {
-      flex: 1;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px 0 0 4px;
-      font-size: 16px;
-    }
-    button {
-      padding: 10px 20px;
-      border: none;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 0 4px 4px 0;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    .results {
-      width: 100%;
-      max-width: 600px;
-    }
-    .results h2 {
-      margin-bottom: 10px;
-    }
-    .results ul {
-      list-style: none;
-      padding: 0;
-    }
-    .results li {
-      background: white;
-      margin: 5px 0;
-      padding: 10px;
-      border-radius: 4px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
+.node-box {
+  fill: #222;
+  stroke: #fff;
+  stroke-width: 2;
+  rx: 6; ry: 6;
+  cursor: pointer;             
+}
+.edge {
+  stroke: #aaa;
+  stroke-width: 2;
+}
+.label {
+  font-family: sans-serif;
+  font-size: 18px;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  fill: #fff;
+  cursor: pointer;             
+}
+
+form input, form button {
+  background: #333;
+  color: #fff;
+  border: 1px solid #555;
+}
+form {
+  display: flex;
+  margin: 50px auto 30px;    /* 50px top, auto left/right to center, 30px bottom */
+  width: 100%;
+  max-width: 600px;
+}
+input[name="query"] {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+  font-size: 16px;
+}
+button {
+  padding: 10px 20px;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 0 4px 4px 0;
+}
+button:hover {
+  background-color: #0056b3;
+}
+.results {
+  width: 100%;
+  max-width: 600px;
+}
+.results h2 {
+  margin-bottom: 10px;
+}
+.results ul {
+  list-style: none;
+  padding: 0;
+}
+.results li {
+  background: white;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
