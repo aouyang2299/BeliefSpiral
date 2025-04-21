@@ -78,6 +78,6 @@ def similar_to(query, topn=5):
     return [c for c, _ in sims]
 
 # Examples
-# for q in ["trump", "vaccines", "moon", "right-wing"]:
-#     print(f"\nQuery: {q!r}")
-#     print(" Related:", similar_to(q))
+for q in ["trump", "vaccines", "moon", "right-wing"]:
+    print(f"\nQuery: {q!r}")
+    print(" Related:", similar_to(q))

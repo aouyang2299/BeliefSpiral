@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Belief Graph Explorer</title>
+  <style>
+    body, html { margin:0; padding:0; height:100%; background:#000; color:#fff }
+    #graphContainer { width:100%; height:80vh }
+    svg { width:100%; height:100%; display:block }
+    .node-box {
+      fill: #222;
+      stroke: #fff;
+      stroke-width: 2;
+      rx: 6; ry: 6;
+      cursor: pointer;             /* show pointer */
+    }
+    .edge {
+      stroke: #aaa;
+      stroke-width: 2;
+    }
+    .label {
+      font-family: sans-serif;
+      font-size: 18px;
+      text-anchor: middle;
+      dominant-baseline: middle;
+      fill: #fff;
+      cursor: pointer;             /* show pointer */
+    }
+    form input, form button {
+      background: #333;
+      color: #fff;
+      border: 1px solid #555;
+    }
+    form input::placeholder {
+      color: #bbb;
+    }
+  </style>
+</head>
+<body>
+  <h1>Belief Graph Explorer</h1>
+  <form method="post">
+    <input name="query" placeholder="Enter a belief"
+           value="{{ query }}" required>
+    <button type="submit">Search</button>
+  </form>
+
+  <div id="graphContainer">
+    <svg id="graphSvg" viewBox="0 0 600 600"
+         preserveAspectRatio="xMidYMid meet"></svg>
+  </div>
+
+  <script>
+    const query   = {{ query   | tojson }};
+    const results = {{ results | default([], true) | tojson }};
+    const form    = document.querySelector('form');
+    const input   = form.querySelector('input[name="query"]');
+
+    if (!Array.isArray(results) || results.length !== 5) {
+      document.getElementById('graphSvg').outerHTML =
+        '<div style="padding:2rem;text-align:center;color:#fff;">' +
+        '<em>Enter a belief and hit Search to render the graph.</em>' +
+        '</div>';
+    } else {
+      const svg        = document.getElementById('graphSvg');
+      svg.innerHTML    = '<g id="edges"></g><g id="nodes"></g>';
+      const edgesLayer = svg.querySelector('#edges');
+      const nodesLayer = svg.querySelector('#nodes');
+
+      const W   = 600, H = 600;
+      const cx  = W/2, cy = H/2;
+      const R   = 220;
+      const startAngle = -Math.PI/2;
+      const padding    = 8;
+
+      function make(tag, attrs) {
+        const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+        for (let k in attrs) el.setAttribute(k, attrs[k]);
+        return el;
+      }
+
+      // draw center
+      (function(){
+        const t = make('text', { x:cx, y:cy, class:'label' });
+        t.textContent = query;
+        nodesLayer.appendChild(t);
+        const b = t.getBBox();
+        const rect = make('rect', {
+          x: b.x - padding,
+          y: b.y - padding,
+          width:  b.width  + padding*2,
+          height: b.height + padding*2,
+          class: 'node-box'
+        });
+        nodesLayer.insertBefore(rect, t);
+
+        // click handler on center, if you want it to re-search itself
+        [rect, t].forEach(el=>{
+          el.addEventListener('click', ()=>{
+            input.value = query;
+            form.submit();
+          });
+        });
+      })();
+
+      // draw each outer
+      results.forEach((txt,i) => {
+        const angle = startAngle + i * (2*Math.PI/5);
+        const x     = cx + R * Math.cos(angle);
+        const y     = cy + R * Math.sin(angle);
+
+        // edge
+        const line = make('line', {
+          x1: cx, y1: cy, x2: x, y2: y, class: 'edge'
+        });
+        edgesLayer.appendChild(line);
+
+        // label
+        const t = make('text', { x, y, class:'label' });
+        t.textContent = txt;
+        nodesLayer.appendChild(t);
+
+        // box
+        const b = t.getBBox();
+        const rect = make('rect', {
+          x: b.x - padding,
+          y: b.y - padding,
+          width:  b.width  + padding*2,
+          height: b.height + padding*2,
+          class: 'node-box'
+        });
+        nodesLayer.insertBefore(rect, t);
+
+        // attach click to both
+        [rect, t].forEach(el=>{
+          el.addEventListener('click', ()=>{
+            input.value = txt;
+            form.submit();
+          });
+        });
+      });
+    }
+  </script>
+</body>
+</html>

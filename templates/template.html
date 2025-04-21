@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
+
+  <title>Belief Graph Explorer</title>
+  
+</head>
+<body>
+  <h1>Belief Graph Explorer</h1>
+  <form method="post">
+    <input name="query" placeholder="Enter a belief" value="{{ query }}" required>
+    <button type="submit">Search</button>
+  </form>
+
+  {% if result %}
+  <div id="graph-container">
+    <!-- This is the center node -->
+    <div class="results">
+      <h2>Top Related Beliefs to "{{ query }}"</h2>
+      <ul>
+      {% for belief in result %}
+        <li>{{ belief }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% else %}
+    <h2>No related beliefs</h2>
+  {% endif %}
+
+  <script src="{{ url_for('static', filename='js.js') }}"></script>
+
+</body>
+
+</html>

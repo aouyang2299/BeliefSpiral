@@ -1,0 +1,28 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
+
+  <title>Belief Graph Explorer</title>
+  
+</head>
+<body>
+  <h1>Belief Graph Explorer</h1>
+  <form method="post">
+    <input name="query" placeholder="Enter a belief" value="{{ query }}" required>
+    <button type="submit">Search</button>
+  </form>
+
+  <div id="graph-container">
+    <div class="results">
+    <h2>No related beliefs</h2>
+    </div>
+  </div>
+
+</body>
+
+</html>
