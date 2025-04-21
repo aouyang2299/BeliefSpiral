@@ -4,23 +4,18 @@
   <meta charset="utf-8">
   <title>Belief Graph Explorer</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background-color: #000;      /* ← black page background */
-      color: #fff;                 /* ← fallback text color */
-    }
-    #graphContainer { width: 100%; height: 80vh }
-    svg { width: 100%; height: 100%; display: block }
+    body, html { margin:0; padding:0; height:100%; background:#000; color:#fff }
+    #graphContainer { width:100%; height:80vh }
+    svg { width:100%; height:100%; display:block }
     .node-box {
-      fill: #222;                 /* dark box to contrast on black */
-      stroke: #fff;               /* white border */
+      fill: #222;
+      stroke: #fff;
       stroke-width: 2;
       rx: 6; ry: 6;
+      cursor: pointer;             /* show pointer */
     }
     .edge {
-      stroke: #aaa;               /* lighter gray line on black */
+      stroke: #aaa;
       stroke-width: 2;
     }
     .label {
@@ -28,8 +23,8 @@
       font-size: 18px;
       text-anchor: middle;
       dominant-baseline: middle;
-      pointer-events: none;
-      fill: #fff;                 /* white labels */
+      fill: #fff;
+      cursor: pointer;             /* show pointer */
     }
     form input, form button {
       background: #333;
@@ -57,17 +52,17 @@
   <script>
     const query   = {{ query   | tojson }};
     const results = {{ results | default([], true) | tojson }};
+    const form    = document.querySelector('form');
+    const input   = form.querySelector('input[name="query"]');
 
     if (!Array.isArray(results) || results.length !== 5) {
       document.getElementById('graphSvg').outerHTML =
-        '<div style="padding:2rem;text-align:center;">' +
+        '<div style="padding:2rem;text-align:center;color:#fff;">' +
         '<em>Enter a belief and hit Search to render the graph.</em>' +
         '</div>';
     } else {
-      const svg = document.getElementById('graphSvg');
-
-      // initialize two layers: one for edges, one for nodes
-      svg.innerHTML = '<g id="edges"></g><g id="nodes"></g>';
+      const svg        = document.getElementById('graphSvg');
+      svg.innerHTML    = '<g id="edges"></g><g id="nodes"></g>';
       const edgesLayer = svg.querySelector('#edges');
       const nodesLayer = svg.querySelector('#nodes');
 
@@ -75,7 +70,7 @@
       const cx  = W/2, cy = H/2;
       const R   = 220;
       const startAngle = -Math.PI/2;
-      const padding    = 8;  // px around text
+      const padding    = 8;
 
       function make(tag, attrs) {
         const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
@@ -83,8 +78,8 @@
         return el;
       }
 
-      // draw center box in nodesLayer
-      (function drawCenter() {
+      // draw center
+      (function(){
         const t = make('text', { x:cx, y:cy, class:'label' });
         t.textContent = query;
         nodesLayer.appendChild(t);
@@ -97,28 +92,34 @@
           class: 'node-box'
         });
         nodesLayer.insertBefore(rect, t);
+
+        // click handler on center, if you want it to re-search itself
+        [rect, t].forEach(el=>{
+          el.addEventListener('click', ()=>{
+            input.value = query;
+            form.submit();
+          });
+        });
       })();
 
-      // draw each outer node + edge
+      // draw each outer
       results.forEach((txt,i) => {
         const angle = startAngle + i * (2*Math.PI/5);
         const x     = cx + R * Math.cos(angle);
         const y     = cy + R * Math.sin(angle);
 
-        // line into edgesLayer
+        // edge
         const line = make('line', {
-          x1: cx, y1: cy,
-          x2: x,  y2: y,
-          class: 'edge'
+          x1: cx, y1: cy, x2: x, y2: y, class: 'edge'
         });
         edgesLayer.appendChild(line);
 
-        // text label into nodesLayer
+        // label
         const t = make('text', { x, y, class:'label' });
         t.textContent = txt;
         nodesLayer.appendChild(t);
 
-        // measure and draw box behind it in nodesLayer
+        // box
         const b = t.getBBox();
         const rect = make('rect', {
           x: b.x - padding,
@@ -128,6 +129,14 @@
           class: 'node-box'
         });
         nodesLayer.insertBefore(rect, t);
+
+        // attach click to both
+        [rect, t].forEach(el=>{
+          el.addEventListener('click', ()=>{
+            input.value = txt;
+            form.submit();
+          });
+        });
       });
     }
   </script>
