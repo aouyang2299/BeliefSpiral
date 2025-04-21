@@ -15,8 +15,8 @@
     // early exit if no data
     if (!Array.isArray(results) || results.length !== 5) {
       document.getElementById('graphSvg').outerHTML =
-        '<div style="padding:2rem;text-align:center;color:#fff;">' +
-        '<em>Enter a belief and hit Search to render the graph.</em>' +
+        '<div class="no-results">' +
+        '<p>No results found. Enter a new belief and hit Search.</p>' +
         '</div>';
       return;
     }
