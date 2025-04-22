@@ -167,6 +167,9 @@ for q in ["trump"]: # ["trump", "the New York City mayor", "vaccines", "moon", "
     print(f"\nQuery: {q!r}")
     print(" Related:", similar_to(q))
 
+all_queries = [str(k) for k in model.wv.key_to_index.keys()]
+
+
 
 
     

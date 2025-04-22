@@ -5,13 +5,6 @@
     const form  = document.querySelector('form');
     const input = form.querySelector('input[name="query"]');
   
-    // helper to make SVG elements
-    function make(tag, attrs) {
-      const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
-      for (let k in attrs) el.setAttribute(k, attrs[k]);
-      return el;
-    }
-  
     // early exit if no data
     if (!Array.isArray(results) || results.length !== 5) {
       document.getElementById('graphSvg').outerHTML =
@@ -20,13 +13,80 @@
         '</div>';
       return;
     }
-  
-    // set up SVG layers
-    const svg        = document.getElementById('graphSvg');
-    svg.innerHTML    = '<g id="edges"></g><g id="nodes"></g>';
-    const edgesLayer = svg.querySelector('#edges');
-    const nodesLayer = svg.querySelector('#nodes');
 
+    function drawGraph(query, results) {
+      const svg        = document.getElementById('graphSvg');
+      svg.innerHTML    = '<g id="edges"></g><g id="nodes"></g>';
+      const edgesLayer = svg.querySelector('#edges');
+      const nodesLayer = svg.querySelector('#nodes');
+    
+      const W = 600, H = 600;
+      const cx = W / 2, cy = H / 2;
+      const R = 220;
+      const startAngle = -Math.PI / 2;
+      const padding = 8;
+    
+      // Helper to create SVG elements
+      function make(tag, attrs) {
+        const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+        for (let k in attrs) el.setAttribute(k, attrs[k]);
+        return el;
+      }
+    
+      // Draw center node
+      const centerText = make('text', { x: cx, y: cy, class: 'label' });
+      centerText.textContent = query;
+      nodesLayer.appendChild(centerText);
+    
+      const centerBox = centerText.getBBox();
+      const centerRect = make('rect', {
+        x: centerBox.x - padding,
+        y: centerBox.y - padding,
+        width:  centerBox.width  + padding * 2,
+        height: centerBox.height + padding * 2,
+        class: 'node-box'
+      });
+      nodesLayer.insertBefore(centerRect, centerText);
+    
+      // Draw connected outer nodes
+      results.forEach((txt, i) => {
+        const angle = startAngle + i * (2 * Math.PI / 5);
+        const x = cx + R * Math.cos(angle);
+        const y = cy + R * Math.sin(angle);
+    
+        // Edge
+        edgesLayer.appendChild(make('line', {
+          x1: cx, y1: cy, x2: x, y2: y, class: 'edge'
+        }));
+    
+        // Text
+        const nodeText = make('text', { x, y, class: 'label' });
+        nodeText.textContent = txt;
+        nodesLayer.appendChild(nodeText);
+    
+        // Box
+        const nodeBox = nodeText.getBBox();
+        const nodeRect = make('rect', {
+          x: nodeBox.x - padding,
+          y: nodeBox.y - padding,
+          width:  nodeBox.width  + padding * 2,
+          height: nodeBox.height + padding * 2,
+          class: 'node-box'
+        });
+        nodesLayer.insertBefore(nodeRect, nodeText);
+    
+        // Click behavior
+        [nodeRect, nodeText].forEach(el =>
+          el.addEventListener('click', () => {
+            logClick(txt);
+            input.value = txt;
+            form.submit();
+          })
+        );
+      });
+    }
+    drawGraph(query, results)
+  
     const clickListEl = document.getElementById('click-list');
     let clickHistory = JSON.parse(localStorage.getItem('clickHistory') || '[]');
 
@@ -47,65 +107,6 @@
       clickListEl.appendChild(li);
     }
   
-    // constants
-    const W   = 600, H = 600;
-    const cx  = W/2, cy = H/2;
-    const R   = 220;
-    const startAngle = -Math.PI/2;
-    const padding    = 8;
-  
-    // draw center node
-    (function drawCenter(){
-      const t = make('text', { x:cx, y:cy, class:'label' });
-      t.textContent = query;
-      nodesLayer.appendChild(t);
-      const b = t.getBBox();
-      const rect = make('rect', {
-        x: b.x - padding,
-        y: b.y - padding,
-        width:  b.width  + padding*2,
-        height: b.height + padding*2,
-        class: 'node-box'
-      });
-      nodesLayer.insertBefore(rect, t);
-    })();
-  
-    // draw outer nodes and edges
-    results.forEach((txt,i) => {
-      const angle = startAngle + i*(2*Math.PI/5);
-      const x     = cx + R * Math.cos(angle);
-      const y     = cy + R * Math.sin(angle);
-  
-      // edge
-      edgesLayer.appendChild(make('line',{
-        x1: cx, y1: cy, x2: x, y2: y, class: 'edge'
-      }));
-  
-      // text
-      const t = make('text',{ x, y, class:'label' });
-      t.textContent = txt;
-      nodesLayer.appendChild(t);
-  
-      // box
-      const b = t.getBBox();
-      const rect = make('rect',{
-        x: b.x - padding,
-        y: b.y - padding,
-        width:  b.width  + padding*2,
-        height: b.height + padding*2,
-        class: 'node-box'
-      });
-      nodesLayer.insertBefore(rect, t);
-  
-      [rect, t].forEach(el => 
-        el.addEventListener('click', () => {
-          logClick(txt);   // use the text you’re clicking on
-          input.value = txt;
-          form.submit();
-        })
-      );
-    });
-
     form.addEventListener('submit', () => {
       // 1) Clear in‑memory and persisted log
       clickHistory = [];
@@ -158,8 +159,4 @@
         //   });
       });
     });
-    
-
-    
-  
   })();
