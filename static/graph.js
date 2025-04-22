@@ -106,23 +106,14 @@
       li.textContent = text;
       clickListEl.appendChild(li);
     }
+    function clearHistory() {
+      clickHistory = [];
+      localStorage.removeItem("clickHistory");
+      document.getElementById("click-list").innerHTML = "";
+    }
   
     form.addEventListener('submit', () => {
-      // 1) Clear in‑memory and persisted log
-      clickHistory = [];
-      localStorage.removeItem('clickHistory');
-      // 2) Clear the sidebar (optional, since page is reloading)
-      clickListEl.innerHTML = '';
-      // 3) Let the form continue to submit and do a full page reload
-      const belief = input.value.trim();
-      if (belief) {
-        clickHistory.push(belief);
-        localStorage.setItem('clickHistory', JSON.stringify(clickHistory));
-    
-        const li = document.createElement('li');
-        li.textContent = belief;
-        clickListEl.appendChild(li);
-      }
+      clearHistory()
     });
 
 
@@ -152,5 +143,11 @@
         form.submit();
     
       });
+    });
+
+    const homeLink = document.getElementById("home-link");
+
+    homeLink?.addEventListener("click", () => {
+      clearHistory(); // ✅ clears visual + saved click log before reload
     });
   })();
