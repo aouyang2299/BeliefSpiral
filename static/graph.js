@@ -111,6 +111,18 @@
       localStorage.removeItem("clickHistory");
       document.getElementById("click-list").innerHTML = "";
     }
+
+    const isFirstGraph = window.BELIEF_DATA?.results?.length === 5 && clickHistory.length === 0;
+    if (isFirstGraph) {
+      const firstQuery = window.BELIEF_DATA.query;
+    
+      clickHistory.push(firstQuery);
+      localStorage.setItem("clickHistory", JSON.stringify(clickHistory));
+    
+      const li = document.createElement("li");
+      li.textContent = firstQuery;
+      document.getElementById("click-list").appendChild(li);
+    }
   
     form.addEventListener('submit', () => {
       clearHistory()

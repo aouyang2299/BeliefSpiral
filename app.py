@@ -20,9 +20,5 @@ def index():
     _seen_queries.clear()  # 👈 Clear past seen nodes when the page is reloaded
     return render_template('template2.html', results=results, query=query, all_queries = all_queries)
 
-    
-    return render_template('welcome.html', query=query)
-
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True, use_reloader=False)
