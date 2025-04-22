@@ -130,6 +130,7 @@
 
 
     document.addEventListener("DOMContentLoaded", () => {
+      
       const randomBtn = document.getElementById("random-btn");
       const input = document.querySelector('input[name="query"]');
       const form = document.querySelector("form");
@@ -140,6 +141,7 @@
 
     
       randomBtn.addEventListener("click", () => {
+        clearHistory()
         if (!allQueries.length) {
           alert("⚠️ No available queries to choose from.");
           return;
