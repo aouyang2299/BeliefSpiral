@@ -141,7 +141,7 @@
           alert("⚠️ No available queries to choose from.");
           return;
         }
-    
+  
         const randomIndex = Math.floor(Math.random() * allQueries.length);
         const randomQuery = allQueries[randomIndex];
     
@@ -151,12 +151,6 @@
         // Submit the form (will reload the page unless you're intercepting it)
         form.submit();
     
-        // If you're using AJAX to fetch + draw, do this instead:
-        // fetch(`/graph-json?query=${encodeURIComponent(randomQuery)}`)
-        //   .then(res => res.json())
-        //   .then(({ query, results }) => {
-        //     loadNewGraph(query, results);
-        //   });
       });
     });
   })();
