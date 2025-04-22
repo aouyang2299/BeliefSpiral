@@ -147,7 +147,7 @@ def similar_to(query, topn=5):
 
 
 # Examples
-for q in ["trump", "vaccines", "moon", "right-wing"]:
+for q in ["trump", "the New York City mayor", "vaccines", "moon", "right-wing"]:
     print(f"\nQuery: {q!r}")
     print(" Related:", similar_to(q))
 
