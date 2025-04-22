@@ -11,7 +11,7 @@ app = Flask(
 @app.route('/', methods=['GET', 'POST'])
 def index():
     query = ''
-    results = None
+    results = []
 
     if request.method == 'POST':
         query = request.form.get('query', '')

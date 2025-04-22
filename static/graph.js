@@ -4,15 +4,10 @@
     const { query, results, all_queries } = window.BELIEF_DATA;
     const form  = document.querySelector('form');
     const input = form.querySelector('input[name="query"]');
+    const clickListEl = document.getElementById('click-list');
+    let clickHistory = JSON.parse(localStorage.getItem('clickHistory') || '[]');
   
-    // early exit if no data
-    if (!Array.isArray(results) || results.length !== 5) {
-      document.getElementById('graphSvg').outerHTML =
-        '<div class="no-results">' +
-        '<p>No results found. Enter a new belief and hit "Search".</p>' +
-        '</div>';
-      return;
-    }
+
 
     function drawGraph(query, results) {
       const svg        = document.getElementById('graphSvg');
@@ -31,6 +26,17 @@
         const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
         for (let k in attrs) el.setAttribute(k, attrs[k]);
         return el;
+      }
+      // Helper to add clicks to history
+      function logClick(text) {
+        // record in memory
+        clickHistory.push(text);
+        // persist
+        localStorage.setItem('clickHistory', JSON.stringify(clickHistory));
+        // append to DOM
+        const li = document.createElement('li');
+        li.textContent = text;
+        clickListEl.appendChild(li);
       }
     
       // Draw center node
@@ -86,32 +92,14 @@
       });
     }
     drawGraph(query, results)
-  
-    const clickListEl = document.getElementById('click-list');
-    let clickHistory = JSON.parse(localStorage.getItem('clickHistory') || '[]');
 
     clickHistory.forEach(text => {
       const li = document.createElement('li');
       li.textContent = text;
       clickListEl.appendChild(li);
     });
-
-    function logClick(text) {
-      // record in memory
-      clickHistory.push(text);
-      // persist
-      localStorage.setItem('clickHistory', JSON.stringify(clickHistory));
-      // append to DOM
-      const li = document.createElement('li');
-      li.textContent = text;
-      clickListEl.appendChild(li);
-    }
-    function clearHistory() {
-      clickHistory = [];
-      localStorage.removeItem("clickHistory");
-      document.getElementById("click-list").innerHTML = "";
-    }
-
+  
+    //Appends first search to clickHistory
     const isFirstGraph = window.BELIEF_DATA?.results?.length === 5 && clickHistory.length === 0;
     if (isFirstGraph) {
       const firstQuery = window.BELIEF_DATA.query;
@@ -124,44 +112,46 @@
       document.getElementById("click-list").appendChild(li);
     }
   
+    //CLEARS clickHistory WHEN NEEDED
+    function clearHistory() {
+      clickHistory = [];
+      localStorage.removeItem("clickHistory");
+      document.getElementById("click-list").innerHTML = "";
+    }
     form.addEventListener('submit', () => {
       clearHistory()
     });
-
-
-    document.addEventListener("DOMContentLoaded", () => {
-      
-      const randomBtn = document.getElementById("random-btn");
-      const input = document.querySelector('input[name="query"]');
-      const form = document.querySelector("form");
-    
-      // Make sure the data exists
-      const allQueries = window.BELIEF_DATA?.all_queries || [];
-      console.log(`🔢 Total Queries: ${allQueries.length}`);
-
-    
-      randomBtn.addEventListener("click", () => {
-        clearHistory()
-        if (!allQueries.length) {
-          alert("⚠️ No available queries to choose from.");
-          return;
-        }
-  
-        const randomIndex = Math.floor(Math.random() * allQueries.length);
-        const randomQuery = allQueries[randomIndex];
-    
-        // Show it in the input
-        input.value = randomQuery;
-    
-        // Submit the form (will reload the page unless you're intercepting it)
-        form.submit();
-    
-      });
-    });
-
     const homeLink = document.getElementById("home-link");
-
     homeLink?.addEventListener("click", () => {
       clearHistory(); // ✅ clears visual + saved click log before reload
     });
+
+    //RANDOM BUTTON 
+    const randomBtn  = document.getElementById("random-btn");
+    const allQueries = window.BELIEF_DATA.all_queries;
+    
+      randomBtn.addEventListener("click", () => {
+        console.log("🌀 Random button clicked!");
+
+        clearHistory?.(); // optional chaining if it's not defined yet
+    
+        const randomQuery = allQueries[
+          Math.floor(Math.random() * allQueries.length)
+        ];
+    
+        input.value = randomQuery;
+        form.submit();
+      });
+
+          // early exit if no data
+    if (!Array.isArray(results) || results.length !== 5) {
+      document.getElementById('graphSvg').outerHTML =
+        '<div class="no-results">' +
+        '<p>Enter a new belief and hit "Search".</p>' +
+        '</div>';
+      return;
+    }
+
+
+    
   })();
