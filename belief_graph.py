@@ -89,8 +89,8 @@ _seen_queries = set()
 
     # store only the first node
     # but use all nodes found to generate neighbors
-    # select top 2 neighbors from each node
-    # select top 5 from the 10 based on score
+    # select top 10 neighbors from each node
+    # select top 5 from the 50 based on score
 
 # … keep your imports, global `_seen_queries`, and _find_best_nodes as before …
 
@@ -112,7 +112,7 @@ def similar_to(query: str, topn: int = 5) -> list[str]:
     # 3) for each candidate, pull top‑2 neighbors
     all_neighbors: list[tuple[str,float]] = []
     for cand in candidates:
-        for neigh, score in model.wv.most_similar(cand, topn=2):
+        for neigh, score in model.wv.most_similar(cand, topn=10):
             if neigh not in _seen_queries:
                 all_neighbors.append((neigh, score))
 
