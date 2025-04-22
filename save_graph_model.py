@@ -8,7 +8,7 @@ from pathlib import Path
 # 1) Manually list your files ──────────────────────────────────────────────
 input_files = [
     "raw_data/final_data/newsapi_100_with_spacy_concepts010_full.json",
-    "raw_data/final_data/reddit_600_with_spacy_concepts010_full.json",
+    "raw_data/final_data/reddit_600_with_spacy_concepts010__filtered_full.json",
     "raw_data/final_data/wiki_180_with_spacy_concepts011_full.json",
     "raw_data/final_data/nyt_200_with_spacy_concepts011_full.json", 
     "raw_data/final_data/guardian_200_with_spacy_concepts011_full.json"

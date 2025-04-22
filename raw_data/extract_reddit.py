@@ -107,7 +107,7 @@ if __name__ == "__main__":
 
     out_dir = Path("final_data")
     out_dir.mkdir(exist_ok=True)
-    out_path = out_dir / "reddit_600_with_spacy_concepts010_full.json"
+    out_path = out_dir / "reddit_600_with_spacy_concepts010__filtered_full.json"
 
     for entry in subset:
         title   = entry.get("title", "") or ""
