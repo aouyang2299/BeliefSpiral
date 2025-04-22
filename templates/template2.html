@@ -9,6 +9,9 @@
 
 <body>
   {% include 'partials/_heading.html' %}
+  <p>Query: {{ query }}</p>
+  <p>Results: {{ results }}</p>
+  <p>All Queries: {{ all_queries }}</p>
 
   <div id="app" class="layout">
     <!-- Left column: click log -->
@@ -33,7 +36,8 @@
   <script>
     window.BELIEF_DATA = {
       query:   {{ query   | tojson }},
-      results: {{ results | default([], true) | tojson }}
+      results: {{ results | default([], true) | tojson }}, 
+      all_queries: {{ all_queries | default([]) | tojson }}
     };
   </script>
   <script src="{{ url_for('static', filename='graph.js') }}"></script>

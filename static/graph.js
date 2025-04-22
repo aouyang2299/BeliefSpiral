@@ -1,7 +1,7 @@
 (function(){
   
     // grab the data you embedded into the page
-    const { query, results } = window.BELIEF_DATA;
+    const { query, results, all_queries } = window.BELIEF_DATA;
     const form  = document.querySelector('form');
     const input = form.querySelector('input[name="query"]');
   
@@ -123,6 +123,42 @@
         clickListEl.appendChild(li);
       }
     });
+
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const randomBtn = document.getElementById("random-btn");
+      const input = document.querySelector('input[name="query"]');
+      const form = document.querySelector("form");
+    
+      // Make sure the data exists
+      const allQueries = window.BELIEF_DATA?.all_queries || [];
+      console.log(`🔢 Total Queries: ${allQueries.length}`);
+
+    
+      randomBtn.addEventListener("click", () => {
+        if (!allQueries.length) {
+          alert("⚠️ No available queries to choose from.");
+          return;
+        }
+    
+        const randomIndex = Math.floor(Math.random() * allQueries.length);
+        const randomQuery = allQueries[randomIndex];
+    
+        // Show it in the input
+        input.value = randomQuery;
+    
+        // Submit the form (will reload the page unless you're intercepting it)
+        form.submit();
+    
+        // If you're using AJAX to fetch + draw, do this instead:
+        // fetch(`/graph-json?query=${encodeURIComponent(randomQuery)}`)
+        //   .then(res => res.json())
+        //   .then(({ query, results }) => {
+        //     loadNewGraph(query, results);
+        //   });
+      });
+    });
+    
 
     
   

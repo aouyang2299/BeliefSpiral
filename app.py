@@ -1,6 +1,8 @@
-from flask import Flask, request, render_template
-from belief_graph import similar_to, _seen_queries # added by andy
+from flask import Flask, request, render_template, jsonify
+from belief_graph import model, similar_to, _seen_queries # added by andy
 import os
+import random
+
 import sys
 
 # Ensure we can import belief_graph and resolve data paths
@@ -18,18 +20,28 @@ app = Flask(
 )
 
 
+
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     query = ''
     results = None
+    all_queries = ["trump", "e"]
 
     if request.method == 'POST':
         query = request.form.get('query', '')
         results = similar_to(query)
-        return render_template('template2.html', results=results, query=query)
+        print("🧪 all_queries before render:", all_queries)  # should print ['trump', 'e']
 
-    _seen_queries.clear()  # 👈 Clear past seen nodes when the page is reloaded
-    return render_template('welcome.html', query=query)
+        return render_template('template2.html', query=query, results=results, all_queries=all_queries)
+    
+
+    return render_template(
+        'template2.html',
+        query=query,
+        results=results,          # ✅ MUST be here
+        all_queries=all_queries
+    )
 
 
 if __name__ == '__main__':
