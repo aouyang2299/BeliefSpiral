@@ -10,10 +10,24 @@
 <body>
   {% include 'partials/_heading.html' %}
 
-  <div id="graphContainer">
-    <svg id="graphSvg" viewBox="0 0 600 600"
-         preserveAspectRatio="xMidYMid meet"></svg>
+  <div id="app" class="layout">
+    <!-- Left column: click log -->
+    <div id="click-log">
+      <h2>Your History</h2>
+      <ul id="click-list"> 
+      </ul>
+    </div>
+
+    <!-- Right column: form + graph -->
+    <main id="graph-main">
+      <div id="graphContainer">
+        <svg id="graphSvg" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+
+    </main>
   </div>
+
+
 
 
   <script>

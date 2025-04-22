@@ -1,5 +1,5 @@
 (function(){
-
+  
     // grab the data you embedded into the page
     const { query, results } = window.BELIEF_DATA;
     const form  = document.querySelector('form');
@@ -26,6 +26,26 @@
     svg.innerHTML    = '<g id="edges"></g><g id="nodes"></g>';
     const edgesLayer = svg.querySelector('#edges');
     const nodesLayer = svg.querySelector('#nodes');
+
+    const clickListEl = document.getElementById('click-list');
+    let clickHistory = JSON.parse(localStorage.getItem('clickHistory') || '[]');
+
+    clickHistory.forEach(text => {
+      const li = document.createElement('li');
+      li.textContent = text;
+      clickListEl.appendChild(li);
+    });
+
+    function logClick(text) {
+      // record in memory
+      clickHistory.push(text);
+      // persist
+      localStorage.setItem('clickHistory', JSON.stringify(clickHistory));
+      // append to DOM
+      const li = document.createElement('li');
+      li.textContent = text;
+      clickListEl.appendChild(li);
+    }
   
     // constants
     const W   = 600, H = 600;
@@ -48,13 +68,6 @@
         class: 'node-box'
       });
       nodesLayer.insertBefore(rect, t);
-  
-      [rect, t].forEach(el => 
-        el.addEventListener('click', () => {
-          input.value = query;
-          form.submit();
-        })
-      );
     })();
   
     // draw outer nodes and edges
@@ -86,10 +99,31 @@
   
       [rect, t].forEach(el => 
         el.addEventListener('click', () => {
+          logClick(txt);   // use the text you’re clicking on
           input.value = txt;
           form.submit();
         })
       );
     });
+
+    form.addEventListener('submit', () => {
+      // 1) Clear in‑memory and persisted log
+      clickHistory = [];
+      localStorage.removeItem('clickHistory');
+      // 2) Clear the sidebar (optional, since page is reloading)
+      clickListEl.innerHTML = '';
+      // 3) Let the form continue to submit and do a full page reload
+      const belief = input.value.trim();
+      if (belief) {
+        clickHistory.push(belief);
+        localStorage.setItem('clickHistory', JSON.stringify(clickHistory));
+    
+        const li = document.createElement('li');
+        li.textContent = belief;
+        clickListEl.appendChild(li);
+      }
+    });
+
+    
   
   })();
