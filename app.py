@@ -17,7 +17,6 @@ def index():
         query = request.form.get('query', '')
         results = similar_to(query)
 
-    _seen_queries.clear()  # 👈 Clear past seen nodes when the page is reloaded
     return render_template('template2.html', results=results, query=query, all_queries = all_queries)
 
 if __name__ == '__main__':
