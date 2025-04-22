@@ -101,13 +101,13 @@ def extract_spacy_concepts(title: str,
 
 if __name__ == "__main__":
     # Only process first 25 entries
-    input_file = "guardian_200.json"
+    input_file = "reddit_600.json"
     items = json.load(open(input_file, encoding="utf8"))
     subset = items # items[:25]
 
     out_dir = Path("final_data")
     out_dir.mkdir(exist_ok=True)
-    out_path = out_dir / "guardian_200_with_spacy_concepts010_full.json"
+    out_path = out_dir / "reddit_600_with_spacy_concepts010_full.json"
 
     for entry in subset:
         title   = entry.get("title", "") or ""
