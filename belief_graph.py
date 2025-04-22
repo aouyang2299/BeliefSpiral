@@ -7,32 +7,40 @@ from node2vec import Node2Vec
 import json
 from pathlib import Path
 
-# 1) Manually list your files ──────────────────────────────────────────────
-input_files = [
-    "raw_data/final_data/newsapi_100_with_spacy_concepts010_full.json",
-    "raw_data/final_data/reddit_500_with_spacy_concepts010.json",
-    "raw_data/final_data/wiki_180_with_spacy_concepts010_full.json"
-]
+# # 1) Manually list your files ──────────────────────────────────────────────
+# input_files = [
+#     "raw_data/final_data/newsapi_100_with_spacy_concepts010_full.json",
+#     "raw_data/final_data/reddit_500_with_spacy_concepts010.json",
+#     "raw_data/final_data/wiki_180_with_spacy_concepts010_full.json"
+# ]
 
-# 2) Load & concatenate ────────────────────────────────────────────────────
-all_records = []
-for path_str in input_files:
-    fp = Path(path_str)
-    if not fp.exists():
-        print(f"⚠️ File not found: {fp}")
-        continue
-    with fp.open(encoding="utf8") as f:
-        data = json.load(f)
-        all_records.extend(data)
+# # 2) Load & concatenate ────────────────────────────────────────────────────
+# all_records = []
+# for path_str in input_files:
+#     fp = Path(path_str)
+#     if not fp.exists():
+#         print(f"⚠️ File not found: {fp}")
+#         continue
+#     with fp.open(encoding="utf8") as f:
+#         data = json.load(f)
+#         all_records.extend(data)
 
-# 3) Write out merged file ─────────────────────────────────────────────────
-output_fp = Path("raw_data/final_data") / "all_spacy_concepts_combined.json"
-output_fp.parent.mkdir(exist_ok=True)
-with output_fp.open("w", encoding="utf8") as f:
-    json.dump(all_records, f, ensure_ascii=False, indent=2)
+# # 3) Write out merged file ─────────────────────────────────────────────────
+# output_fp = Path("raw_data/final_data") / "all_spacy_concepts_combined.json"
+# output_fp.parent.mkdir(exist_ok=True)
+# with output_fp.open("w", encoding="utf8") as f:
+#     json.dump(all_records, f, ensure_ascii=False, indent=2)
 
-print(f"✅ Merged {len(all_records)} records into {output_fp}")
+# print(f"✅ Merged {len(all_records)} records into {output_fp}")
 
+file_path = Path("raw_data/final_data/all_spacy_concepts_combined.json")
+
+# Read and parse the JSON
+with file_path.open(encoding="utf8") as f:
+    all_records = json.load(f)
+
+# Summary information
+print(f"✅ Loaded {len(all_records)} records from {file_path}")
 
 # ── 2) Count concept co‑occurrences per snippet ───────────────────────────────
 edge_counts = Counter()
@@ -118,16 +126,23 @@ def similar_to(query, topn=5):
         print(f"✗ No node match for '{query}' (tried singular='{query.rstrip('s')}').")
         return []
 
-    # 👇 Skip nodes we've already shown before
-    if node in _seen_queries:
-        print(f"✓ Skipping node '{node}' (already seen)")
-        return []
-
-    _seen_queries.add(node)  # 👈 Mark this node as seen
     print(f"↳ Mapping '{query}' → node «{node}»")
 
-    sims = model.wv.most_similar(node, topn=topn)
-    return [c for c, _ in sims if c not in _seen_queries]
+    # 1) record this central node so we never suggest it again
+    _seen_queries.add(query)
+    _seen_queries.add(node)
+
+    # 2) fetch a few extra neighbors to allow filtering
+    raw = model.wv.most_similar(node, topn=topn + len(_seen_queries))
+
+    # 3) drop anything we've already queried
+    fresh = [c for c, _ in raw if c not in _seen_queries]
+
+    # 4) warn if we can't fill all slots
+    if len(fresh) < topn:
+        print(f"⚠️ Only {len(fresh)} new nodes available for '{query}' (wanted {topn}).")
+
+    return fresh[:topn]
 
 
 
