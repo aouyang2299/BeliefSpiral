@@ -12,10 +12,15 @@
 
   <div id="app" class="layout">
     <!-- Left column: click log -->
+    <div id="button" style="cursor: pointer;"> make story </div>
     <div id="click-log">
       <h2>Your History</h2>
       <ul id="click-list"> 
       </ul>
+    </div>
+
+    <div id="story">
+
     </div>
 
     <!-- Right column: form + graph -->
@@ -34,7 +39,8 @@
       all_queries: {{ all_queries | default([]) | tojson }}
     };
   </script>
-  <script src="{{ url_for('static', filename='graph.js') }}"></script>
+  <script type="module" src="/static/graph.js"></script>
+
 
 
 </body>
