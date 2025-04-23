@@ -109,7 +109,7 @@ def similar_to(query: str, topn: int = 5) -> list[str]:
     _seen_queries.add(query)
     _seen_queries.add(central)
 
-    # 3) for each candidate, pull top‑2 neighbors
+    # 3) for each candidate, pull top‑10 neighbors
     all_neighbors: list[tuple[str,float]] = []
     for cand in candidates:
         for neigh, score in model.wv.most_similar(cand, topn=10):
