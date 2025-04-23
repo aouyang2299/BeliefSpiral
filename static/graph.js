@@ -6,8 +6,6 @@
     const input = form.querySelector('input[name="query"]');
     const clickListEl = document.getElementById('click-list');
     let clickHistory = JSON.parse(localStorage.getItem('clickHistory') || '[]');
-  
-
 
     function drawGraph(query, results) {
       const svg        = document.getElementById('graphSvg');
@@ -120,6 +118,7 @@
     }
     form.addEventListener('submit', () => {
       clearHistory()
+      
     });
     const homeLink = document.getElementById("home-link");
     homeLink?.addEventListener("click", () => {
@@ -152,6 +151,34 @@
       return;
     }
 
+    function sendClicksToServer() {
+      return fetch('/process_clicks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        // PASS clickHistory
+        body: JSON.stringify({ clicked: clickHistory })
+      })
+      .then(res => {
+        if (!res.ok) throw new Error(res.statusText);
+        return res.json();
+      })
+      .then(data => {
+        document.getElementById('story').innerText = data.story;
+      });
+    }
+  
+    // 3) Wait for DOM load if you haven’t already placed this at the bottom
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('button');
+      console.log('Make Story button:', btn);  // should log the <div>
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        sendClicksToServer().catch(err => {
+          console.error(err);
+          document.getElementById('story').innerText = '❌ Failed to generate story';
+        });
+      });
+    });
 
     
   })();
