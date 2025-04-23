@@ -65,7 +65,9 @@ def build_context(clicked_nodes: List[str], docs: List[dict]) -> str:
     for doc in docs:
         title = doc.get('title', '')
         text = doc.get('summary') or doc.get('concept', '')
-        snippet = text.replace('\n', ' ')[:200]
+        if isinstance(text, list): # account for if reddit (list of comments)
+            text = " ".join(text)  
+        snippet = text.replace('\n', ' ')[:200] 
         lines.append(f"- {title}: {snippet}...")
     return '\n'.join(lines)
 
@@ -193,11 +195,12 @@ def generate_evidence_image(summary: str, output_dir: str="images", steps: int=2
 #     return output_path
 
 if __name__ == "__main__":
+    print("Starting generation")
     dataset = load_dataset("raw_data/final_data/all_spacy_concepts_final.json")
     clicked = ["Mr. Trump", "the nation’s post-Watergate campaign finance laws", "Eric Adams case"]
     docs = filter_docs(dataset, clicked)
     context = build_context(clicked, docs)
     summary = generate_conspiracy(context)
     print("Summary:\n", summary)
-    image_path = generate_evidence_image(summary)
-    print("Generated evidence image at", image_path)
+    # image_path = generate_evidence_image(summary)
+    # print("Generated evidence image at", image_path)
