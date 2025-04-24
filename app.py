@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 from belief_graph import similar_to, all_queries
 from conspiracy_generator import load_dataset, filter_docs, build_context, generate_conspiracy
 
