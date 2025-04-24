@@ -105,6 +105,14 @@ def generate_conspiracy(context: str) -> str:
     )
     return call_ollama('llama2', prompt)
 
+# IMAGE GENERATION BELOW
+
+# Pull a model checkpoint fine-tuned for:
+#     •    "Document generation" or "diagram generation".
+#     •    Example: Look for models on civitai.com or HuggingFace like:
+#     ◦    sd-paperspace-docgen
+#     ◦    sci-fi-blueprints-v1
+#     ◦    Or realistic photo generators.
 
 # Setup Stable Diffusion pipeline with optimizations
 _SD_PIPE = None
