@@ -78,10 +78,12 @@ input[name="query"] {
 button {
   padding: 10px 20px;
   border: none;
-  color: white;
+  background: #333;
+  color: #fff;
+  border: 1px solid #555;
   font-size: 16px;
   cursor: pointer;
-  border-radius: 0 4px 4px 0;
+  border-radius: 4px 4px 4px 4px;
 }
 button:hover {
   background-color: #0056b3;
