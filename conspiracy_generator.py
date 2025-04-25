@@ -111,24 +111,49 @@ def generate_conspiracy(context: str) -> str:
 #     •    "Document generation" or "diagram generation".
 #     •    Example: Look for models on civitai.com or HuggingFace like:
 #     ◦    sd-paperspace-docgen
+#                 ==> gated model 
 #     ◦    sci-fi-blueprints-v1
+#                 ==> also not publicly hosted
 #     ◦    Or realistic photo generators.
+
+
+ # pipe = StableDiffusionPipeline.from_pretrained(
+        #     model_id,
+        #     torch_dtype=torch.float32,
+        #     safety_checker=None
+        # )
+
+        # pipe = StableDiffusionPipeline.from_pretrained(
+        # "sd-paperspace-docgen",
+        # use_auth_token=HF_TOKEN,
+        # torch_dtype=torch.float16,
+        # safety_checker=None,
+        # )
 
 # Setup Stable Diffusion pipeline with optimizations
 _SD_PIPE = None
 
+HF_TOKEN = os.environ.get("HUGGING_FACE_API")
+
 def _get_sd_pipe(model_id: str="runwayml/stable-diffusion-v1-5"):
     global _SD_PIPE
     if _SD_PIPE is None:
-        device = 'cpu' #'cuda' if torch.cuda.is_available() else 'cpu'
-        pipe = StableDiffusionPipeline.from_pretrained(
-            model_id,
-            torch_dtype=torch.float32,
-            safety_checker=None
-        )
+        # device = 'cpu'  # or 'cuda' if you have a GPU
+        # pipe = StableDiffusionPipeline.from_pretrained(
+        #         "gsdf/Counterfeit-V2.5", torch_dtype=torch.float16, safety_checker=None)
+        
+        # pick GPU if available, otherwise CPU
+        device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        # on GPU use float16 for speed & memory; on CPU stick with float32
+        sd_kwargs = {"safety_checker": None}
+        if device == 'cuda':
+            sd_kwargs["torch_dtype"] = torch.float16
+        pipe = StableDiffusionPipeline.from_pretrained("gsdf/Counterfeit-V2.5", **sd_kwargs)
         pipe.scheduler = EulerDiscreteScheduler.from_config(pipe.scheduler.config)
         _SD_PIPE = pipe.to(device)
     return _SD_PIPE
+
+
 
 def detect_theme(clicked_nodes: list, summary: str) -> str:
     # Seed keywords per category
@@ -210,5 +235,5 @@ if __name__ == "__main__":
     context = build_context(clicked, docs)
     summary = generate_conspiracy(context)
     print("Summary:\n", summary)
-    # image_path = generate_evidence_image(summary)
-    # print("Generated evidence image at", image_path)
+    image_path = generate_evidence_image(summary)
+    print("Generated evidence image at", image_path)
