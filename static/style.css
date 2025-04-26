@@ -30,7 +30,7 @@ h1 {
   font-size: 4rem;     
 }
 
-#graphContainer { width: 150%; height: 100vh; }
+#graphContainer { width: 100%; height: 100vh; }
 svg { width:100%; height:100%; display:block }
 
 .node-box {
